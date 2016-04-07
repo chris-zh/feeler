@@ -16,5 +16,4 @@
 		<property name="prefix" value="/views/" />
 		<property name="suffix" value=".html" />
 	</bean>
-	<bean class="" name=""></bean>
 </beans>

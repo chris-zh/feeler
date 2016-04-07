@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,4 +29,9 @@ public class TestController {
     	
         return "test";
     }
+    public static void main(String[] args) {
+		BeanFactory bf = new XmlBeanFactory(new ClassPathResource("spring-servlet.xml"));
+		bf.getBean("myTestBean");
+		System.out.println(bf.toString());
+	}
 }
