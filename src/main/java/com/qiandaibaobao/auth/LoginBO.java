@@ -13,10 +13,20 @@ public class LoginBO implements AuthService {
 	public User login(String username, String passwd) {
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("select T.EMP_NAME user_name ,T.ROLE passwd from EBAO_TP_STAFF T where T.EMP_NAME = ? ");
+//		sql.append(" INSERT INTO USERS(NAME, PASSWORD) VALUES ('chris','123') ");
+//		sql.append("create table users(name text,password text)");
+		sql.append("select name,password from users where name = ? ");
 		User user = jdbcTemplate.query(sql.toString(),
-						new Object[] { "Ðì¿ªÇÚ" },
-						(rs, rowNum) -> new User(rs.getString("user_name"), rs.getString("passwd"))).get(0);
+						new Object[] { "chris" },
+						(rs, rowNum) -> new User(rs.getString("name"), rs.getString("password"))).get(0);
+//		jdbcTemplate.execute(sql.toString());
+//		jdbcTemplate.execute(sql.toString());
+//		makeDB();
 		return user;
+	}
+	private void makeDB(){
+		StringBuilder sql = new StringBuilder();
+		sql.append("create table users(name text,password text)");
+		jdbcTemplate.execute(sql.toString());
 	}
 }

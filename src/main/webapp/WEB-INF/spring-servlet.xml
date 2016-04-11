@@ -23,17 +23,9 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
-			<value>oracle.jdbc.driver.OracleDriver</value>
-		</property>
-		<property name="url">
-			<value>jdbc:oracle:thin:@ip:1521:instance_name</value>
-		</property>
-		<property name="username">
-			<value></value>
-		</property>
-		<property name="password">
-			<value></value>
-		</property>
+		 <!-- 指定连接数据库的驱动 -->  
+        <property name="driverClassName" value="org.sqlite.JDBC" />  
+        <!-- 指定连接数据库的URL -->  
+        <property name="url" value="jdbc:sqlite::resource:feeler.db" /> 
 	</bean>
 </beans>

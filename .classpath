@@ -29,5 +29,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/qiandai/app/apache-tomcat-8.0.33/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/sqlite-jdbc-3.8.11.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
