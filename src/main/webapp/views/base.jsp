@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -28,7 +28,7 @@
 </head>
 <body>
 	<jsp:include page="navbar.html"></jsp:include>
-	<jsp:include page="success.html"></jsp:include>
+	<jsp:include page="panel.html"></jsp:include>
 </body>
 <script src="static/js/jquery-1.12.3.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
