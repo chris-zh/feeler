@@ -3,6 +3,7 @@ package com.qiandaibaobao.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
 
 @Component
 public class LoginBO implements AuthService {
@@ -22,7 +23,8 @@ public class LoginBO implements AuthService {
 //		jdbcTemplate.execute(sql.toString());
 //		jdbcTemplate.execute(sql.toString());
 //		makeDB();
-		return user;
+
+        return user;
 	}
 	private void makeDB(){
 		StringBuilder sql = new StringBuilder();
