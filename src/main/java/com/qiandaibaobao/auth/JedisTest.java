@@ -1,24 +1,34 @@
 package com.qiandaibaobao.auth;
 
+import io.protostuff.runtime.RuntimeSchema;
 import redis.clients.jedis.Jedis;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Created by Administrator on 2016/5/29 0029.
  */
 public class JedisTest {
+
+
+
     private static Jedis jedis = new Jedis("121.42.149.46",6379);
     public static void main(String[] args){
         Jedis jedis =JedisTest.jedis;
         jedis.auth("redis");
-//        testString(jedis);
-//        testMap(jedis);
-        testList(jedis);
+        Emp emp = new Emp();
+        emp.setEmpId(1);
+        emp.setEmpName("张三");
+        emp.setEmpNo("0001");
+        emp.setOrganId("101");
+        emp.setPassword("zhangsanm101");
+        String key = "emp:" + emp.getEmpId();
+
+
     }
+//    private static RuntimeSchema schema =
 
     private static void testList(Jedis jedis) {
         jedis.del("java framework");
@@ -46,7 +56,7 @@ public class JedisTest {
         System.out.println(jedis.get("age"));
     }
     private static void testMap(Jedis jedis){
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap();
         map.put("name", "elsa");
         map.put("age", "20");
         jedis.hmset("user",map);
@@ -58,5 +68,8 @@ public class JedisTest {
             System.out.println("key = " + key);
         }
     }
+
 }
+
+
 
