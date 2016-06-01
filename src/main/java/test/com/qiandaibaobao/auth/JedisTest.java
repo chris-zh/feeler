@@ -46,6 +46,7 @@ public class JedisTest {
         Assert.assertEquals(result, "OK");
         Emp getEmp = getEmp(emp.getEmpId());
 //        Assert.assertSame(getEmp, emp);
+        assert getEmp != null;
         Assert.assertEquals(getEmp.getEmpId(), emp.getEmpId());
 
     }
@@ -56,17 +57,17 @@ public class JedisTest {
      * @return
      * @throws Exception
      */
+    @SuppressWarnings("JavaDoc")
     private String putEmp(Emp emp) throws Exception{
         Jedis jedis = jedisPool.getResource();
         jedis.auth("redis");
         try {
-            String key = "emp" + emp.getEmpId();
+            String key = "emp:" + emp.getEmpId();
             byte[] bytes = ProtobufIOUtil.toByteArray(emp, schema,
                     LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
             int timeout = 60 * 60;//1小时
-            String result = jedis.setex(key.getBytes(), timeout, bytes);
 
-            return result;
+            return jedis.setex(key.getBytes(), timeout, bytes);
         }finally {
             jedis.close();
         }
@@ -79,8 +80,9 @@ public class JedisTest {
      * @return
      * @throws Exception
      */
+    @SuppressWarnings("JavaDoc")
     private Emp getEmp(int empId)throws Exception{
-        String key = "emp" + empId;
+        String key = "emp:" + empId;
         Jedis jedis = jedisPool.getResource();
         jedis.auth("redis");
         try  {
