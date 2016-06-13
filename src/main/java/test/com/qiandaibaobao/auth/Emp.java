@@ -1,4 +1,4 @@
-package com.qiandaibaobao.auth;
+package test.com.qiandaibaobao.auth;
 
 /**
  * Created by Administrator on 2016/5/31 0031.

@@ -1,5 +1,9 @@
 package com.qiandaibaobao.auth;
 
+import com.mysql.jdbc.log.LogFactory;
+import com.qiandaibaobao.util.Utils;
+import org.apache.commons.logging.impl.Log4JLogger;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +13,8 @@ import redis.clients.jedis.Jedis;
 @Component
 public class LoginBO implements AuthService {
 
+    private static Logger logger = Logger.getLogger(LoginBO.class);
+
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
@@ -16,9 +22,9 @@ public class LoginBO implements AuthService {
 		String sql = "select name,password from user where name = ? and password = ? ";
         User user =  null;
         try {
-            jdbcTemplate.queryForObject(sql, new Object[]{username, passwd},User.class);
+            user = jdbcTemplate.queryForObject(sql, new Object[]{username, passwd},User.class);
         }catch (DataAccessException e){
-            System.out.println("e = " + e.getMessage());
+            logger.error(Utils.utf8String("查询失败"), e);
         }
         return user;
 	}

@@ -1,6 +1,5 @@
 package test.com.qiandaibaobao.auth;
 
-import com.qiandaibaobao.auth.Emp;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
 import io.protostuff.runtime.RuntimeSchema;

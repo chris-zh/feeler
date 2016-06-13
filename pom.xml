@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>feeler Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	<dependencies>
+    <dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -84,6 +84,18 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.18</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.8</version>
+        </dependency>
+		<!-- mybatis/spring包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>feeler</finalName>

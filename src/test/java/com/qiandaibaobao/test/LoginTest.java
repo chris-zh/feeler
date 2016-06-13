@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 public class LoginTest{
 	
 	public static void main(String[] args) {
-		Map<String, String> map = new HashMap<>()		;
+		Map<String, String> map = new HashMap()		;
 		map.put("1", "23")								;
 		JsonObject obj = new JsonObject()				;
 		obj.addProperty("12", "13")						;

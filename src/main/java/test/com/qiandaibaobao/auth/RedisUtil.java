@@ -1,4 +1,4 @@
-package com.qiandaibaobao.auth;
+package test.com.qiandaibaobao.auth;
 
 import org.omg.CORBA.TIMEOUT;
 import redis.clients.jedis.Jedis;
