@@ -12,6 +12,6 @@
     <title>Title</title>
 </head>
 <body>
-Welcome,  ${userName}
+Welcome,  ${user.name}
 </body>
 </html>

@@ -19,6 +19,11 @@ import redis.clients.jedis.JedisPool;
  */
 public class JedisTest {
     private final JedisPool jedisPool;
+    public Jedis getJedis(){
+        Jedis jedis = jedisPool.getResource();
+        jedis.auth("redis");
+        return jedis;
+    }
     public JedisTest(){
         jedisPool = new JedisPool("121.42.149.46", 6379);
     }
@@ -59,8 +64,7 @@ public class JedisTest {
      */
     @SuppressWarnings("JavaDoc")
     private String putEmp(Emp emp) throws Exception{
-        Jedis jedis = jedisPool.getResource();
-        jedis.auth("redis");
+        Jedis jedis = getJedis();
         try {
             String key = "emp:" + emp.getEmpId();
             byte[] bytes = ProtobufIOUtil.toByteArray(emp, schema,
@@ -83,8 +87,7 @@ public class JedisTest {
     @SuppressWarnings("JavaDoc")
     private Emp getEmp(int empId)throws Exception{
         String key = "emp:" + empId;
-        Jedis jedis = jedisPool.getResource();
-        jedis.auth("redis");
+        Jedis jedis = getJedis();
         try  {
             byte[] bytes = jedis.get(key.getBytes());
             if (bytes != null) {

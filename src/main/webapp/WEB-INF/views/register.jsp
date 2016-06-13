@@ -1,23 +1,21 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2016/6/12 0012
-  Time: 下午 8:45
+  User: chris.zhang
+  Date: 16-6-13
+  Time: 下午2:16
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>欢迎</title>
 </head>
 <body>
-${message}
-<form action="/login" method="post">
+<form action="/register" method="post">
     用户名：<input type="text" name="username"/><br/>
     密码：<input type="password" name="password"/><br/>
-    <button type="submit" value="提交">提交</button>
+    <button type="submit" value="注册">注册</button>
 </form>
-<a href="/register-init">注册</a>
 </body>
 </html>

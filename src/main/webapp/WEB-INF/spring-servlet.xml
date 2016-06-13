@@ -31,8 +31,16 @@
 	</bean>
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		 <!-- 指定连接数据库的驱动 -->  
-        <property name="driverClassName" value="org.sqlite.JDBC" />  
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <!-- 指定连接数据库的URL -->  
-        <property name="url" value="jdbc:sqlite::resource:feeler.db" /> 
+        <property name="url" value="jdbc:mysql://121.42.149.46:3306/qb?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="xh"/>
+        <property name="password" value="xh"/>
 	</bean>
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <!--&lt;!&ndash; 指定连接数据库的驱动 &ndash;&gt;-->
+        <!--<property name="driverClassName" value="org.sqlite.JDBC" />-->
+        <!--&lt;!&ndash; 指定连接数据库的URL &ndash;&gt;-->
+        <!--<property name="url" value="jdbc:sqlite::resource:feeler.db" />-->
+    <!--</bean>-->
 </beans>

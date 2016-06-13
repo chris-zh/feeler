@@ -1,31 +1,34 @@
 package com.qiandaibaobao.auth;
 
 public class User {
-	private String userName;
-	private String passwd;
+	private String name;
+	private String password;
 	public User() {
 	}
-	public User(String userName, String passwd){
-		this.userName = userName;
-		this.passwd = passwd;
+	public User(String name, String password){
+		this.name = name;
+		this.password = password;
 	}
-	
-	public String getUserName() {
-		return userName;
+
+	public String getName() {
+		return name;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getPasswd() {
-		return passwd;
+
+	public String getPassword() {
+		return password;
 	}
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("User: %s,%s", this.userName,this.passwd);
+		return String.format("User: %s,%s", this.name,this.password);
 	}
 	
 
