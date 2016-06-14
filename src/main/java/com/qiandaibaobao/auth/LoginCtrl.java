@@ -1,5 +1,7 @@
 package com.qiandaibaobao.auth;
 
+import com.qiandaibaobao.bo.IAuthBO;
+import com.qiandaibaobao.pojo.User;
 import com.qiandaibaobao.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,11 +10,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class LoginCtrl {
 
     @Autowired
     AuthService service;
+    @Autowired
+    IAuthBO bo;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String index() {
@@ -29,7 +36,9 @@ public class LoginCtrl {
                         @RequestParam("password") String password,
                         Model model) {
 
-        User user = service.login(userName, password);
+//        User user = service.login(userName, password);
+        User user = bo.fetchUserByNameAndPassword(new User(userName, password));
+        System.out.println("user = " + user);
         if (user == null) {
             model.addAttribute("message", Utils.utf8String("登陆失败！用户名或密码错误！"));
             return "index";

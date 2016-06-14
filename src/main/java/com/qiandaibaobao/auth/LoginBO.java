@@ -29,7 +29,6 @@ public class LoginBO implements AuthService {
         return user;
 	}
 
-    @Override
     public void register(String username, String password) {
         String sql = "insert into user (name, password) values(?,?)";
         jdbcTemplate.update(sql, new Object[]{username, password});

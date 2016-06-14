@@ -2,7 +2,6 @@ package test.com.qiandaibaobao.auth;
 
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
-import io.protostuff.runtime.RuntimeSchema;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,8 +65,9 @@ public class JedisTest {
         Jedis jedis = getJedis();
         try {
             String key = "emp:" + emp.getEmpId();
-            byte[] bytes = ProtobufIOUtil.toByteArray(emp, schema,
-                    LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+            byte[] bytes = null;
+//                    ProtobufIOUtil.toByteArray(emp, schema,
+//                    LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
             int timeout = 60 * 60;//1小时
 
             return jedis.setex(key.getBytes(), timeout, bytes);
@@ -89,16 +89,16 @@ public class JedisTest {
         Jedis jedis = getJedis();
         try  {
             byte[] bytes = jedis.get(key.getBytes());
-            if (bytes != null) {
-                Emp emp = schema.newMessage();
-                ProtobufIOUtil.mergeFrom(bytes, emp, schema);
-                return emp;
-            }
+//            if (bytes != null) {
+//                Emp emp = schema.newMessage();
+//                ProtobufIOUtil.mergeFrom(bytes, emp, schema);
+//                return emp;
+//            }
         }finally {
             jedis.close();
         }
         return null;
     }
-    private RuntimeSchema<Emp> schema = RuntimeSchema.createFrom(Emp.class);
+//    private RuntimeSchema<Emp> schema = RuntimeSchema.createFrom(Emp.class);
 
 } 

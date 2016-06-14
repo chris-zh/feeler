@@ -1,13 +1,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<mvc:annotation-driven />
 	<!-- 启用spring mvc 注解 -->
 	<context:component-scan base-package="com.qiandaibaobao" />
@@ -29,24 +31,44 @@
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
+
+    <!-- 数据源 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		 <!-- 指定连接数据库的驱动 -->  
+		 <!-- 指定连接数据库的驱动 -->
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <!-- 指定连接数据库的URL -->  
+        <!-- 指定连接数据库的URL -->
         <property name="url" value="jdbc:mysql://121.42.149.46:3306/qb?useUnicode=true&amp;characterEncoding=UTF-8"/>
         <property name="username" value="xh"/>
         <property name="password" value="xh"/>
 	</bean>
-	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+	<!--mybatis的Sqlsession工厂-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:com/qiandaibaobao/mapping/*.xml"></property>
+		<property name="configLocation" value="classpath:com/qiandaibaobao/mapping/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:com/qiandaibaobao/mapping/*Mapper.xml"/>
 	</bean>
 
-    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <!--
+        3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
+
+        basePackage:指定sql映射文件/接口所在的包（自动扫描）
+    -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.qiandaibaobao.dao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+
+    <!--
+        4. 事务管理 : DataSourceTransactionManager dataSource:引用上面定义的数据源
+    -->
+    <bean id="txManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 5. 使用声明式事务
+         transaction-manager：引用上面定义的事务管理器
+     -->
+    <tx:annotation-driven transaction-manager="txManager" />
 </beans>
