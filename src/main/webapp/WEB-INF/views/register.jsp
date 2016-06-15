@@ -12,10 +12,12 @@
     <title>欢迎</title>
 </head>
 <body>
-<form action="/register" method="post">
+${message}
+<form action="register" method="post">
     用户名：<input type="text" name="username"/><br/>
     密码：<input type="password" name="password"/><br/>
     <button type="submit" value="注册">注册</button>
 </form>
+<a href="./">回到首页</a>
 </body>
 </html>

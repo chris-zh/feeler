@@ -10,7 +10,27 @@
         http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
-	<mvc:annotation-driven />
+	<!--<mvc:annotation-driven />-->
+    <!--<mvc:annotation-driven>-->
+        <!--&lt;!&ndash;     解决返回String时乱码&ndash;&gt;-->
+        <!--<mvc:message-converters register-defaults="true">-->
+            <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
+                <!--<property name="supportedMediaTypes">-->
+                    <!--<list>-->
+                        <!--<value>text/plain;charset=UTF-8</value>-->
+                        <!--<value>text/html;charset=UTF-8</value>-->
+                    <!--</list>-->
+                <!--</property>-->
+            <!--</bean>-->
+        <!--</mvc:message-converters>-->
+    <!--</mvc:annotation-driven>-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 	<!-- 启用spring mvc 注解 -->
 	<context:component-scan base-package="com.qiandaibaobao" />
 

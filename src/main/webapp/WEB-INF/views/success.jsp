@@ -13,5 +13,9 @@
 </head>
 <body>
 Welcome,  ${user.name}
+<form action="change-password-init" method="post">
+    <input type="hidden" name="username" value="${user.name}">
+    <button type="submit" >修改密码</button>
+</form>
 </body>
 </html>
