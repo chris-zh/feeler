@@ -14,7 +14,7 @@ public class Utils {
     public static String utf8String(String str){
         String newStr = null;
         try {
-            newStr = new String(str.getBytes(), "UTF-8");
+            newStr = new String(str.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
