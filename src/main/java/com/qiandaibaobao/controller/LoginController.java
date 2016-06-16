@@ -34,12 +34,10 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String login(@RequestParam("username") String userName,
                         @RequestParam("password") String password,
-                        Model model,
-                        HttpServletResponse response) {
+                        Model model) {
         User user = bo.user(userName, password);
-        System.out.println("Utils.utf8String(\"测试乱码\") = " + Utils.utf8String("测试乱码"));
         if (user == null) {
-            model.addAttribute("message", Utils.utf8String("用户名或密码错误，请重试！"));
+            model.addAttribute("message", "用户名或密码错误，请重试！");
             return "index";
         } else {
             model.addAttribute("user", user);
@@ -53,10 +51,10 @@ public class LoginController {
                            Model model) {
         boolean success = bo.register(new User(userName, password));
         if(success){
-            model.addAttribute("message", Utils.utf8String("注册成功，请登陆！"));
+            model.addAttribute("message", "注册成功，请登陆！");
             return "index";
         }else{
-            model.addAttribute("message", Utils.utf8String("用户名已存在，请重试！"));
+            model.addAttribute("message", "用户名已存在，请重试！");
             return "register";
         }
 
@@ -73,10 +71,10 @@ public class LoginController {
         boolean success = bo.changePassword(userName, null, newPassword);
         response.setCharacterEncoding("UTF-8");
         if(success){
-            model.addAttribute("message", Utils.utf8String("修改密码成功！"));
+            model.addAttribute("message", "修改密码成功！");
             return "index";
         }else{
-            model.addAttribute("message", Utils.utf8String("密码错误，请重试！"));
+            model.addAttribute("message", "密码错误，请重试！");
             model.addAttribute("username", userName);
             return "changePassword";
         }
