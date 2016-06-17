@@ -65,8 +65,9 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="configLocation" value="classpath:com/qiandaibaobao/mapping/mybatis-config.xml"/>
+		<!--<property name="configLocation" value="classpath:com/qiandaibaobao/mapping/mybatis-config.xml"/>-->
         <property name="mapperLocations" value="classpath:com/qiandaibaobao/mapping/*Mapper.xml"/>
+        <!--<property name="typeAliases" value="classpath:com/qiandaibaobao/mapping/typeAliases.xml"/>-->
 	</bean>
 
     <!--
