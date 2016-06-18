@@ -1,1 +1,26 @@
 https://beta.umbreo.com/login
+
+
+https://beta.umbreo.com/login
+
+1. 解决乱码问题：
+  1)Windows下的文件默认编码为GBK，需要在IDEA中设置，将文件编码修改为UTF-8，否则在Linux环境下乱码
+  2)StringHttpMessageConverter对象中默认编码为ISO-8859-1，因此在Spring-mvc.xml中声明如下， 用于覆盖默认编码
+  <mvc:annotation-driven>
+          <mvc:message-converters register-defaults="true">
+              <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                  <constructor-arg value="UTF-8" />
+              </bean>
+          </mvc:message-converters>
+  </mvc:annotation-driven>
+
+2. 解决Mybatis集成问题：
+  1)声明SqlSessionFactoryBean时，设置mapperLocations和configLocation两个属性。其中mybatis-config.xml不能
+  重复注入。
+  2)**Mapper.xml中的mapper标签：属性ID对应DAO接口的方法名
+    namespace属性：对应DAO的全限定名
+  3)多个入参：在DAO接口入参中，用@Param注解指定参数
+
+3. Tomcat访问路径，默认为http://xx:8080/feeler，要更改为http://www.qiandaibaobao.com
+  1)用nginx做反向代理，监听8080端口，将请求转发给tomcat
+  2)tomcat的配置文件server.xml中，添加context标签，设置path为""，即可将访问路径变为/
