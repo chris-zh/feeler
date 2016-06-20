@@ -20,4 +20,8 @@ public class Utils {
         }
         return newStr;
     }
+
+    public static void main(String[] args){
+        String certiType = "";
+    }
 }
