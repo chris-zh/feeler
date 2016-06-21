@@ -11,3 +11,11 @@ a:link, a:visited {
 .f-message{
     color: #b94a48;
 }
+
+.f-hide{
+    display:none;
+}
+
+.f-show{
+    display:block;
+}

@@ -1,23 +1,36 @@
 <%--
   Created by IntelliJ IDEA.
-  User: chris.zhang
-  Date: 16-6-13
-  Time: 下午2:16
+  User: Administrator
+  Date: 2016/6/12 0012
+  Time: 下午 8:45
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>欢迎</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/pure-min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feeler.css"/>
+    <link rel="shortcut icon" href="../../resources/img/favicon.ico" type="image/x-icon">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.12.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/feeler.js"></script>
+    <title>注册</title>
 </head>
-<body>
-${message}
-<form action="register" method="post">
-    用户名：<input type="text" name="username"/><br/>
-    密码：<input type="password" name="password"/><br/>
-    <button type="submit" value="注册">注册</button>
+<body id="d-body">
+<form action="register" method="post" class="pure-form pure-form-stacked">
+    <div class="f-main">
+        <span class="pure-form-message f-message">${message}</span>
+        <input type="text" name="username" placeholder="用户名"/>
+        <input type="password" name="password" placeholder="密码"/>
+        <button type="submit" class="pure-button pure-button-primary">注册</button>
+    </div>
 </form>
-<a href="./">回到首页</a>
+<canvas id="canvas"></canvas>
 </body>
+<script>
+    $(      //画背景
+            drawBackground()
+    )
+</script>
 </html>

@@ -6,6 +6,7 @@ import com.qiandaibaobao.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,16 +50,17 @@ public class LoginController {
     public String register(@RequestParam("username") String userName,
                            @RequestParam("password") String password,
                            Model model) {
+        if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(password)){
+            model.addAttribute("message", "用户名或密码不能为空！");
+            return "index";
+        }
         boolean success = bo.register(new User(userName, password));
         if(success){
             model.addAttribute("message", "注册成功，请登陆！");
-            return "index";
         }else{
             model.addAttribute("message", "用户名已存在，请重试！");
-            return "register";
         }
-
-
+        return "index";
     }
     @RequestMapping(method = RequestMethod.POST, value="/change-password-init")
     public String changePasswordInit(@RequestParam("username") String userName, Model model){
