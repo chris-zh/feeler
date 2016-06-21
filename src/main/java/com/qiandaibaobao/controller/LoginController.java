@@ -27,11 +27,6 @@ public class LoginController {
         return "index";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/register-init")
-    public String registerInit() {
-        return "register";
-    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String login(@RequestParam("username") String userName,
                         @RequestParam("password") String password,
