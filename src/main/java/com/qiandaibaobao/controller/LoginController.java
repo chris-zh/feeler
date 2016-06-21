@@ -2,7 +2,6 @@ package com.qiandaibaobao.controller;
 
 import com.qiandaibaobao.bo.IUserBO;
 import com.qiandaibaobao.pojo.User;
-import com.qiandaibaobao.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Administrator on 2016/6/15 0015.
+ * Created by chris.zhang on 2016/6/15 0015.
  */
 @Controller
 public class LoginController {

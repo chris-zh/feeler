@@ -3,12 +3,12 @@ function drawBackground() {
     var WIDTH = window.innerWidth, HEIGHT = 700, POINT = 35;
 
     var canvas = document.getElementById('canvas');
-    canvas.width = WIDTH,
-        canvas.height = HEIGHT;
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
     var context = canvas.getContext('2d');
-    context.strokeStyle = 'rgba(0,0,0,0.02)',
-        context.strokeWidth = 1,
-        context.fillStyle = 'rgba(0,0,0,0.05)';
+    context.strokeStyle = 'rgba(0,0,0,0.02)';
+    context.strokeWidth = 1;
+    context.fillStyle = 'rgba(0,0,0,0.05)';
     var circleArr = [];
 
 //线条：开始xy坐标，结束xy坐标，线条透明度
@@ -47,12 +47,12 @@ function drawBackground() {
 
 //绘制线条
     function drawLine(cxt, x, y, _x, _y, o) {
-        var line = new Line(x, y, _x, _y, o)
-        cxt.beginPath()
-        cxt.strokeStyle = 'rgba(0,0,0,' + o + ')'
-        cxt.moveTo(line.beginX, line.beginY)
-        cxt.lineTo(line.closeX, line.closeY)
-        cxt.closePath()
+        var line = new Line(x, y, _x, _y, o);
+        cxt.beginPath();
+        cxt.strokeStyle = 'rgba(0,0,0,' + o + ')';
+        cxt.moveTo(line.beginX, line.beginY);
+        cxt.lineTo(line.closeX, line.closeY);
+        cxt.closePath();
         cxt.stroke();
 
     }

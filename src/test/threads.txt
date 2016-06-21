@@ -1,0 +1,5 @@
+http://www.jb51.net/article/50425.htm
+http://maosheng.iteye.com/blog/2270687
+http://study.163.com/course/introduction/1681004.htm#/courseDetail
+1)现在有T1、T2、T3三个线程，你怎样保证T2在T1执行完后执行，T3在T2执行完后执行？
+使用thread.join()方法
