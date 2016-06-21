@@ -1,0 +1,13 @@
+a:link, a:visited {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.f-main {
+    width: 850px;
+    margin: 30px auto auto;
+}
+
+.f-message{
+    color: #b94a48;
+}
