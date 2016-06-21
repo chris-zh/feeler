@@ -7,6 +7,5 @@
     </typeAliases>
     <mappers>
         <mapper resource="com/qiandaibaobao/mapping/userMapper.xml"/>
-        <!--<mapper class="com.qiandaibaobao.dao.UserDAO"/>-->
     </mappers>
 </configuration>
