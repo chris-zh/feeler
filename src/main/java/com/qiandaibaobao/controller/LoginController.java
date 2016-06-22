@@ -3,6 +3,7 @@ package com.qiandaibaobao.controller;
 import com.qiandaibaobao.bo.IUserBO;
 import com.qiandaibaobao.pojo.User;
 import com.qiandaibaobao.util.Utils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +19,20 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class LoginController {
+    Logger logger = Logger.getLogger(this.getClass());
     @Autowired
     IUserBO bo;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String index(HttpSession session) {
         Object u = session.getAttribute("user");
-        System.out.println("u = " + u);
+        String a = null;
+
+        try {
+            a.substring(10);
+        } catch (Exception e) {
+            logger.error(Utils.getStackTrace(e));
+        }
         if (u!=null) {
             return "success";
         } else {
@@ -41,7 +49,7 @@ public class LoginController {
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
-        User user = bo.user(userName, password);
+        User user = bo.user(userName, Utils.encrypt(password));
         if (user == null) {
             model.addAttribute("message", "用户名或密码错误，请重试！");
             return "index";
@@ -60,7 +68,7 @@ public class LoginController {
             model.addAttribute("message", "用户名或密码不能为空！");
             return "index";
         }
-        boolean success = bo.register(new User(userName, password));
+        boolean success = bo.register(new User(userName, Utils.encrypt(password)));
         if(success){
             model.addAttribute("message", "注册成功，请登陆！");
         }else{

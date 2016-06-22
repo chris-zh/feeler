@@ -14,11 +14,13 @@ public interface UserDAO{
 
     User fetchUserById(@Param("id") int id);
 
-    void addUser(@Param("name") String userName, @Param("password") String password);
+    void addUser(@Param("name") String userName, @Param("password") String password, @Param("salt") String salt);
 
-    void updateUser(@Param("name") String userName, @Param("password") String password, @Param("id") int id);
+    void updateUser(@Param("name") String userName, @Param("password") String password,@Param("salt")String salt, @Param("id") int id);
 
     int fetchUserId(@Param("name") String username);
 
     int countUserName(@Param("name") String userName);
+
+    String userSalt(@Param("name") String userName);
 }

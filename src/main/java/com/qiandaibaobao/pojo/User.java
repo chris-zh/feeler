@@ -10,7 +10,22 @@ public class User {
         this.name = name;
         this.password = password;
     }
+    public User(String name ,String password, String salt){
+        this.name = name;
+        this.password = password;
+        this.salt = salt;
+    }
     private int id;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    private String salt;
 
     public int getId() {
         return id;

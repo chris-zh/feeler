@@ -2,6 +2,7 @@ package com.qiandaibaobao.bo;
 
 import com.qiandaibaobao.dao.UserDAO;
 import com.qiandaibaobao.pojo.User;
+import com.qiandaibaobao.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class UserBO implements IUserBO {
     public boolean register(User user) {
         int countUserName = dao.countUserName(user.getName());
         if(countUserName==0){
-            dao.addUser(user.getName(), user.getPassword());
+            dao.addUser(user.getName(), user.getPassword(), user.getSalt());
             return true;
         }else{
             return false;
@@ -59,7 +60,7 @@ public class UserBO implements IUserBO {
         if(userId == -1){
             return false;
         }else{
-            dao.updateUser(userName, newPassword, userId);
+            dao.updateUser(userName, newPassword, Utils.currentSalt(), userId);
             return true;
         }
     }
