@@ -2,16 +2,16 @@ package com.qiandaibaobao.controller;
 
 import com.qiandaibaobao.bo.IUserBO;
 import com.qiandaibaobao.pojo.User;
+import com.qiandaibaobao.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by chris.zhang on 2016/6/15 0015.
@@ -22,8 +22,14 @@ public class LoginController {
     IUserBO bo;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public String index() {
-        return "index";
+    public String index(HttpSession session) {
+        Object u = session.getAttribute("user");
+        System.out.println("u = " + u);
+        if (u!=null) {
+            return "success";
+        } else {
+            return "index";
+        }
     }
     @RequestMapping("/fuck/{fuckId}/fuck2")
     public String test(@PathVariable("fuckId") String fuckId){
@@ -33,6 +39,7 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String login(@RequestParam("username") String userName,
                         @RequestParam("password") String password,
+                        HttpSession session,
                         Model model) {
         User user = bo.user(userName, password);
         if (user == null) {
@@ -40,6 +47,7 @@ public class LoginController {
             return "index";
         } else {
             model.addAttribute("user", user);
+            session.setAttribute("user", user);
             return "success";
         }
     }
@@ -78,5 +86,12 @@ public class LoginController {
             model.addAttribute("username", userName);
             return "changePassword";
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value="/logout")
+    public String logout(HttpSession session, Model model,HttpServletRequest request){
+        session.setAttribute("user", null);
+        model.addAttribute("message", "已成功退出！");
+        return "index";
     }
 }

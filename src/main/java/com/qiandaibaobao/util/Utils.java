@@ -21,4 +21,13 @@ public class Utils {
         }
         return newStr;
     }
+
+    /**
+     * 对象是否不为空
+     * @param object
+     * @return true 是 false 空
+     */
+    public static boolean isNotNull(Object object){
+        return object != null;
+    }
 }

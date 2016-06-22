@@ -1,0 +1,24 @@
+http://www.jb51.net/article/50425.htm
+http://maosheng.iteye.com/blog/2270687
+http://study.163.com/course/introduction/1681004.htm#/courseDetail
+1)现在有T1、T2、T3三个线程，你怎样保证T2在T1执行完后执行，T3在T2执行完后执行？
+使用thread.join()方法
+
+
+
+
+session
+
+HttpSession是一个接口类型 HttpServletRequest通过getSession方法创建session对象
+(调用getSession()方法时创建，若已有session，返回session，若无session，创建新session),
+创建时将request跟创建好的session绑定
+
+session的一些信息是从web.xml中读取的，如果不配置，那么用默认的配置
+默认配置是从ServletContext里读取的
+
+通过getSession方法，能得到当前request关联的session
+setAttribute方法，将对象与session绑定,如果传入对象为null，效果与removeAttribute方法相同
+getAttribute方法，获得与session绑定的对象
+removeAttribute方法，将对象与session解绑
+
+
