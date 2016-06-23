@@ -4,8 +4,10 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="user" type="com.qiandaibaobao.pojo.User"/>
+        <typeAlias alias="post" type="com.qiandaibaobao.pojo.Post"/>
     </typeAliases>
     <mappers>
-        <mapper resource="com/qiandaibaobao/mapping/orcl_userMapper.xml"/>
+        <mapper resource="com/qiandaibaobao/mapping/userMapper.xml"/>
+        <mapper resource="com/qiandaibaobao/mapping/postMapper.xml"/>
     </mappers>
 </configuration>

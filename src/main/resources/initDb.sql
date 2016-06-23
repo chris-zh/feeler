@@ -12,3 +12,14 @@ id number,
 name varchar2(100),
 password varchar2(100)
 );
+
+
+-- Create table
+create table post
+(
+  id          int not null auto_increment primary key,
+  title       text,
+  content     text,
+  create_time timestamp ,
+  author_id   NUMBER
+)

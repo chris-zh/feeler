@@ -22,3 +22,12 @@ a:link{
 .f-show{
     display:block;
 }
+
+.f-textarea{
+    width: 300px;
+    height: 60px;
+}
+
+.f-wordbreak{
+    word-break: break-all
+}

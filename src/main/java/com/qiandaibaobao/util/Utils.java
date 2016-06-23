@@ -1,5 +1,8 @@
 package com.qiandaibaobao.util;
 
+import com.qiandaibaobao.pojo.User;
+
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -13,6 +16,7 @@ import java.util.Date;
  */
 public class Utils {
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    public static final DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static String SEPARATOR = " ";
     /**
      * 对象是否不为空
@@ -101,5 +105,19 @@ public class Utils {
     public static String newSalt() {
        String baseSalt = df.format(new Date());
         return md5(baseSalt);
+    }
+
+    /**
+     * 从session中获得User
+     * @param session
+     * @return
+     */
+    public static User sessionUser(HttpSession session) {
+        Object u = session.getAttribute("user");
+        if (isNotNull(u)) {
+            return (User)u;
+        }else{
+            return new User();
+        }
     }
 }

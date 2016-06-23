@@ -5,53 +5,59 @@ package com.qiandaibaobao.pojo;
  * Created by Administrator on 2016/6/13 0013.
  */
 public class User {
-    public User(){}
-    public User(String name ,String password){
-        this.name = name;
-        this.password = password;
-    }
-    public User(String name ,String password, String salt){
-        this.name = name;
-        this.password = password;
-        this.salt = salt;
-    }
     private int id;
+    private String salt;
+    private String name;
+    private String password;
 
-    public String getSalt() {
-        return salt;
+    public User() {
     }
 
-    public void setSalt(String salt) {
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
+    public User(String name, String password, String salt) {
+        this.name = name;
+        this.password = password;
         this.salt = salt;
     }
-
-    private String salt;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public User setId(int id) {
         this.id = id;
+        return this;
     }
 
-    private String name;
-    private String password;
+    public String getSalt() {
+        return salt;
+    }
+
+    public User setSalt(String salt) {
+        this.salt = salt;
+        return this;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public User setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     @Override

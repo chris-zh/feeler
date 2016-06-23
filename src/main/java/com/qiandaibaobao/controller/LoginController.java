@@ -1,6 +1,8 @@
 package com.qiandaibaobao.controller;
 
+import com.qiandaibaobao.bo.IPost;
 import com.qiandaibaobao.bo.IUserBO;
+import com.qiandaibaobao.pojo.Post;
 import com.qiandaibaobao.pojo.User;
 import com.qiandaibaobao.util.Utils;
 import org.apache.log4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by chris.zhang on 2016/6/15 0015.
@@ -22,11 +25,16 @@ public class LoginController {
     Logger logger = Logger.getLogger(this.getClass());
     @Autowired
     IUserBO bo;
+    @Autowired
+    IPost postbo;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public String index(HttpSession session) {
+    public String index(HttpSession session, Model model) {
         Object u = session.getAttribute("user");
         if (u!=null) {
+            User user = (User)u;
+            List<Post> posts = postbo.posts(user.getId());
+            model.addAttribute("posts", posts);
             return "success";
         } else {
             return "index";
@@ -35,6 +43,21 @@ public class LoginController {
     @RequestMapping("/fuck/{fuckId}/fuck2")
     public String test(@PathVariable("fuckId") String fuckId){
         return null;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/login")
+    public String login(HttpSession session, Model model) {
+        Object u = session.getAttribute("user");
+        if (u != null) {
+            User user = (User)u;
+            model.addAttribute("user", user);
+            List<Post> posts = postbo.posts(user.getId());
+            model.addAttribute("posts", posts);
+            return "success";
+        }else{
+            model.addAttribute("message", "请重新登录！");
+            return "index";
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
@@ -49,6 +72,8 @@ public class LoginController {
         } else {
             model.addAttribute("user", user);
             session.setAttribute("user", user);
+            List<Post> posts = postbo.posts(user.getId());
+            model.addAttribute("posts", posts);
             return "success";
         }
     }
@@ -90,7 +115,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/logout")
+    @RequestMapping(method = RequestMethod.GET, value="/logout")
     public String logout(HttpSession session, Model model,HttpServletRequest request){
         session.setAttribute("user", null);
         model.addAttribute("message", "已成功退出！");
