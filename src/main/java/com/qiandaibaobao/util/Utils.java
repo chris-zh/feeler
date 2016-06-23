@@ -15,22 +15,6 @@ public class Utils {
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     private static String SEPARATOR = " ";
     /**
-     * 字符串转换成UTF-8
-     *
-     * @param str
-     * @return
-     */
-    public static String utf8String(String str) {
-        String newStr = null;
-        try {
-            newStr = new String(str.getBytes("UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return newStr;
-    }
-
-    /**
      * 对象是否不为空
      * @param object
      * @return true 是 false 空
@@ -64,7 +48,7 @@ public class Utils {
         for (StackTraceElement element : elements) {
             builder.append(element).append("\n");
         }
-        builder.append("异常信息："+e.getMessage());
+        builder.append("异常信息：").append(e.getMessage());
         return builder.toString();
     }
 
@@ -95,9 +79,7 @@ public class Utils {
      * @param password
      * @return
      */
-    public static String encrypt(String password) {
-        //生成盐
-        String salt = currentSalt();
+    public static String encrypt(String password, String salt) {
         return md5(confusion(password, salt));
     }
 
@@ -116,15 +98,8 @@ public class Utils {
      * 用当前时间作盐
      * @return
      */
-    public static String currentSalt() {
+    public static String newSalt() {
        String baseSalt = df.format(new Date());
         return md5(baseSalt);
     }
-
-    public static void main(String[] args){
-        String password = "zhangxihui";
-//        md5Password(password);//158bb14d555aecb921f7c443eb282220
-    }
-
-
 }

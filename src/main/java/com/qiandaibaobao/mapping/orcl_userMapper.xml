@@ -9,15 +9,18 @@
         select id, name, password from tmp_user where id = #{id}
     </select>
     <insert id="addUser">
-        insert into tmp_user (id,name, password) values(tmp_s_user.nextval, #{name}, #{password})
+        insert into tmp_user (id,name, password, salt) values(tmp_s_user.nextval, #{name}, #{password}, #{salt})
     </insert>
     <update id="updateUser">
-        update tmp_user set name = #{name}, password = #{password} where id = #{id}
+        update tmp_user set name = #{name}, password = #{password}, salt=#{salt} where id = #{id}
     </update>
     <select id="fetchUserId" resultType="int">
         select id from tmp_user where name=#{name}
     </select>
     <select id="countUserName" resultType="int">
         select count(id) from tmp_user where name=#{name}
+    </select>
+    <select id="userSalt" resultType="String">
+        select salt from tmp_user where name=#{name}
     </select>
 </mapper>

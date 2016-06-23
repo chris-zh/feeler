@@ -9,7 +9,7 @@
         select id, name, password from user where id = #{id}
     </select>
     <insert id="addUser">
-        insert into user (id,name, password, salt) values(tmp_s_user.nextval, #{name}, #{password}, #{salt})
+        insert into user (name, password, salt) values(#{name}, #{password}, #{salt})
     </insert>
     <update id="updateUser">
         update user set name = #{name}, password = #{password}, salt=#{salt} where id = #{id}

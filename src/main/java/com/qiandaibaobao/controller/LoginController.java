@@ -26,13 +26,6 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String index(HttpSession session) {
         Object u = session.getAttribute("user");
-        String a = null;
-
-        try {
-            a.substring(10);
-        } catch (Exception e) {
-            logger.error(Utils.getStackTrace(e));
-        }
         if (u!=null) {
             return "success";
         } else {
@@ -49,7 +42,7 @@ public class LoginController {
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
-        User user = bo.user(userName, Utils.encrypt(password));
+        User user = bo.user(userName, password);
         if (user == null) {
             model.addAttribute("message", "用户名或密码错误，请重试！");
             return "index";
@@ -68,7 +61,7 @@ public class LoginController {
             model.addAttribute("message", "用户名或密码不能为空！");
             return "index";
         }
-        boolean success = bo.register(new User(userName, Utils.encrypt(password)));
+        boolean success = bo.register(userName, password);
         if(success){
             model.addAttribute("message", "注册成功，请登陆！");
         }else{
@@ -76,23 +69,24 @@ public class LoginController {
         }
         return "index";
     }
-    @RequestMapping(method = RequestMethod.POST, value="/change-password-init")
-    public String changePasswordInit(@RequestParam("username") String userName, Model model){
-        model.addAttribute("username", userName);
-        return "changePassword";
-    }
     @RequestMapping(method = RequestMethod.POST, value="/change-password")
     public String changePassword(@RequestParam("username") String userName,
                                  @RequestParam("newPassword") String newPassword, Model model, HttpServletResponse response){
-        boolean success = bo.changePassword(userName, null, newPassword);
-        response.setCharacterEncoding("UTF-8");
-        if(success){
-            model.addAttribute("message", "修改密码成功！");
-            return "index";
-        }else{
-            model.addAttribute("message", "密码错误，请重试！");
-            model.addAttribute("username", userName);
+        bo.updateUser(userName, newPassword);
+        model.addAttribute("message", "修改密码成功！");
+        return "index";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/change-password")
+    public String changePasswordPage(HttpSession session, Model model) {
+        Object u = session.getAttribute("user");
+        if (u != null) {
+            User user = (User)u;
+            model.addAttribute("username", user.getName());
             return "changePassword";
+        }else{
+            model.addAttribute("message", "请登录！");
+            return "index";
         }
     }
 

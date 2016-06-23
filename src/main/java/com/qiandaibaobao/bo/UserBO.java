@@ -15,11 +15,20 @@ public class UserBO implements IUserBO {
     @Autowired
     private UserDAO dao;
     public User user(String userName, String password) {
-        return dao.fetchUserByNameAndPassword(userName, password);
+        String salt = dao.userSalt(userName);
+        String encryptedPassword = Utils.encrypt(password, salt);
+        return dao.fetchUserByNameAndPassword(userName, encryptedPassword);
     }
 
     public User user(int id) {
         return dao.fetchUserById(id);
+    }
+
+    public void updateUser(String userName, String password) {
+        int id = dao.fetchUserId(userName);
+        String newSalt = Utils.newSalt();
+        String newPassword = Utils.encrypt(password, newSalt);
+        dao.updateUser(userName, newPassword, newSalt, id);
     }
 
     public void login(User user) {
@@ -30,39 +39,15 @@ public class UserBO implements IUserBO {
 
     }
 
-    public boolean register(User user) {
-        int countUserName = dao.countUserName(user.getName());
+    public boolean register(String userName, String password) {
+        int countUserName = dao.countUserName(userName);
+        String newSalt = Utils.newSalt();
         if(countUserName==0){
-            dao.addUser(user.getName(), user.getPassword(), user.getSalt());
+            dao.addUser(userName, Utils.encrypt(password, newSalt), newSalt);
             return true;
         }else{
             return false;
         }
 
     }
-
-    /**
-     * 修改密码
-     * 支持校验旧密码和不校验旧密码两种情况
-     * @param userName
-     * @param oldPassword
-     * @param newPassword
-     * @return
-     */
-    public boolean changePassword(String userName, String oldPassword, String newPassword) {
-        int userId = -1;
-        if(oldPassword!=null){
-            User oldUser = dao.fetchUserByNameAndPassword(userName, oldPassword);
-            userId = oldUser.getId();
-        }else{
-            userId = dao.fetchUserId(userName);
-        }
-        if(userId == -1){
-            return false;
-        }else{
-            dao.updateUser(userName, newPassword, Utils.currentSalt(), userId);
-            return true;
-        }
-    }
-
 }

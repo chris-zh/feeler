@@ -13,7 +13,8 @@ public interface IUserBO {
 
     void logout(User user);
 
-    boolean register(User user);
+    boolean register(String userName, String password);
 
-    boolean changePassword(String userName, String oldPassword, String newPassword);
+
+    void updateUser(String userName, String password);
 }

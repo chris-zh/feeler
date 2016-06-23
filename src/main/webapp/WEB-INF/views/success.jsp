@@ -15,16 +15,35 @@
     <link rel="shortcut icon" href="../../resources/img/favicon.ico" type="image/x-icon">
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.12.3.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/feeler.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/yui-min.js"></script>
     <title>Title</title>
 </head>
 <body>
+<div id="demo-horizontal-menu">
+    <ul id="std-menu-items">
+        <li class="pure-menu-selected"><a href="#">Flickr</a></li>
+        <li><a href="#">Messenger</a></li>
+        <li><a href="#">Sports</a></li>
+        <li><a href="#">Finance</a></li>
+        <li>
+            <a href="#">选项</a>
+            <ul>
+                <li class="pure-menu-heading">用户资料管理</li>
+                <li class="pure-menu-separator"></li>
+                <li><a href="#">用户档案</a></li>
+                <li><a href="change-password">修改密码</a></li>
+                <li><a href="#">退出登录</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
 <div class="f-main">
-<form action="change-password-init" method="post" id="form" class="pure-form">
-    <input type="hidden" name="username" value="${user.name}">
-    <span class="pure-form-message f-message">Welcome,  ${user.name}</span>
-    <button type="submit" class="pure-button pure-button-primary">修改密码</button>
-    <button type="button" id="exit" class="pure-button pure-button-primary">退出</button>
-</form>
+    <form action="change-password-init" method="post" id="form" class="pure-form">
+        <input type="hidden" name="username" value="${user.name}">
+        <span class="pure-form-message f-message">Welcome,  ${user.name}</span>
+        <button type="submit" class="pure-button pure-button-primary">修改密码</button>
+        <button type="button" id="exit" class="pure-button pure-button-primary">退出</button>
+    </form>
 </div>
 <script>
     $("#exit").click(function () {
@@ -32,6 +51,25 @@
         form.attr("action", "logout");
         form.submit();
     })
+</script>
+<%--suppress JSUnresolvedFunction --%>
+<script>
+    YUI({
+        classNamePrefix: 'pure'
+    }).use('gallery-sm-menu', function (Y) {
+
+        var horizontalMenu = new Y.Menu({
+            container         : '#demo-horizontal-menu',
+            sourceNode        : '#std-menu-items',
+            orientation       : 'horizontal',
+            hideOnOutsideClick: false,
+            hideOnClick       : false
+        });
+
+        horizontalMenu.render();
+        horizontalMenu.show();
+
+    });
 </script>
 </body>
 </html>

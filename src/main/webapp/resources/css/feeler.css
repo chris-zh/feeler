@@ -1,6 +1,9 @@
-a:link, a:visited {
-    color: #ffffff;
+a:visited {
+    color: #265778;
     text-decoration: none;
+}
+a:link{
+
 }
 
 .f-main {

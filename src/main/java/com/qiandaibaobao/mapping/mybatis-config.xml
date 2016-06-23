@@ -6,6 +6,6 @@
         <typeAlias alias="user" type="com.qiandaibaobao.pojo.User"/>
     </typeAliases>
     <mappers>
-        <mapper resource="com/qiandaibaobao/mapping/userMapper.xml"/>
+        <mapper resource="com/qiandaibaobao/mapping/orcl_userMapper.xml"/>
     </mappers>
 </configuration>
