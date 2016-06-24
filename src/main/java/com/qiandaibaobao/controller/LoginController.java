@@ -2,6 +2,7 @@ package com.qiandaibaobao.controller;
 
 import com.qiandaibaobao.bo.IPost;
 import com.qiandaibaobao.bo.IUserBO;
+import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.Post;
 import com.qiandaibaobao.pojo.User;
 import com.qiandaibaobao.util.Utils;
@@ -35,16 +36,12 @@ public class LoginController {
             User user = (User)u;
             List<Post> posts = postbo.posts(user.getId());
             model.addAttribute("posts", posts);
-            return "success";
+            Utils.forward(model, Page.post);
+            return "main";
         } else {
             return "index";
         }
     }
-    @RequestMapping("/fuck/{fuckId}/fuck2")
-    public String test(@PathVariable("fuckId") String fuckId){
-        return null;
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String login(HttpSession session, Model model) {
         Object u = session.getAttribute("user");
@@ -53,7 +50,8 @@ public class LoginController {
             model.addAttribute("user", user);
             List<Post> posts = postbo.posts(user.getId());
             model.addAttribute("posts", posts);
-            return "success";
+            Utils.forward(model, Page.post);
+            return "main";
         }else{
             model.addAttribute("message", "请重新登录！");
             return "index";
@@ -74,7 +72,8 @@ public class LoginController {
             session.setAttribute("user", user);
             List<Post> posts = postbo.posts(user.getId());
             model.addAttribute("posts", posts);
-            return "success";
+            Utils.forward(model, Page.post);
+            return "main";
         }
     }
 
@@ -108,7 +107,8 @@ public class LoginController {
         if (u != null) {
             User user = (User)u;
             model.addAttribute("username", user.getName());
-            return "changePassword";
+            Utils.forward(model, Page.changePassword);
+            return "main";
         }else{
             model.addAttribute("message", "请登录！");
             return "index";

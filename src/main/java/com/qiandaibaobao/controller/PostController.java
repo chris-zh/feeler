@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.qiandaibaobao.bo.IPost;
+import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.Post;
 import com.qiandaibaobao.pojo.User;
 import com.qiandaibaobao.util.Utils;
@@ -36,7 +37,8 @@ public class PostController {
             model.addAttribute("message","发布成功！");
             List<Post> posts = bo.posts(user.getId());
             model.addAttribute("posts", posts);
-            return "success";
+            Utils.forward(model, Page.post);
+            return "main";
         }else{
             model.addAttribute("message", "请先登录！");
             return "index";
@@ -49,7 +51,8 @@ public class PostController {
             List<Post> posts = bo.posts(user.getId());
             model.addAttribute("posts", posts);
             model.addAttribute("user", user);
-            return "success";
+            Utils.forward(model, Page.post);
+            return "main";
         }else{
             model.addAttribute("message", "请先登录！");
             return "index";

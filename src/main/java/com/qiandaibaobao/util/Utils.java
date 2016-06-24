@@ -1,6 +1,8 @@
 package com.qiandaibaobao.util;
 
+import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.User;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -119,5 +121,14 @@ public class Utils {
         }else{
             return new User();
         }
+    }
+
+    /**
+     * 页面跳转
+     * @param model
+     * @param page
+     */
+    public static void forward(Model model, Page page) {
+        model.addAttribute("page", page.toString()+".jsp");
     }
 }

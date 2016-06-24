@@ -2,15 +2,8 @@
 create table user(
 id int unsigned not null auto_increment primary key,
 name text not null,
-password text not null
-);
-
-
---oracle版本
-create table tmp_user(
-id number,
-name varchar2(100),
-password varchar2(100)
+password text not null,
+salt text
 );
 
 
@@ -21,5 +14,16 @@ create table post
   title       text,
   content     text,
   create_time timestamp ,
-  author_id   NUMBER
+  author_id   int
 )
+
+create table comment(
+id int not null auto_increment primary key,
+content text,
+create_time timestamp ,
+author_id int,
+post_id int
+);
+
+ALTER TABLE qb.`user` ADD avatar text NULL;
+ALTER TABLE qb.`user` ADD create_time TIMESTAMP NULL;

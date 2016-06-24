@@ -43,4 +43,9 @@ public class PostBO implements IPost {
     public List<Post> posts(int authorId) {
         return dao.posts(authorId);
     }
+
+    @Override
+    public Post post(int postId) {
+        return null;
+    }
 }

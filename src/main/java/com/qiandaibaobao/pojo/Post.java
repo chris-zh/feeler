@@ -4,11 +4,13 @@ import com.qiandaibaobao.util.Utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by chris.zhang on 16-6-23.
+ * Post: 文章
  */
 public class Post {
     private int id;
@@ -16,7 +18,7 @@ public class Post {
     private String content;
     private Date createTime;
     private int authorId;
-    private List<Comment> comments;
+    private List<Comment> comments  = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -77,10 +79,11 @@ public class Post {
 
     @Override
     public String toString() {
-        return String.format("[post:%s %s %s %s %s]", this.id,
+        return String.format("[post:%s %s %s %s %s %s]", this.id,
                 this.title,
                 this.content,
                 this.authorId,
-                this.createTime);
+                this.getStringCreateTime(),
+                this.getComments());
     }
 }

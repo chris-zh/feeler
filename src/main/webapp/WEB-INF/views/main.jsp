@@ -18,7 +18,7 @@
     <link rel="shortcut icon" href="../../resources/img/favicon.ico" type="image/x-icon">
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.12.3.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/feeler.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/yui-min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/yui.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/success.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/Markdown.Converter.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/Markdown.Sanitizer.min.js"></script>
@@ -43,8 +43,14 @@
 </li>
 </ul>
 </div>
-<jsp:include page="post.jsp" flush="true"/>
-<jsp:include page="userProfile.jsp" flush="true"/>
+<div class="container">
+        <c:if test="${message!=null}">
+            <div class="alert alert-warning">${message}</div>
+        </c:if>
+    <div>
+        <jsp:include page="${page}" flush="true"/>
+    </div>
+</div>
 </body>
 </html>
 

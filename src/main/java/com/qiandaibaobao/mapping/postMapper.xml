@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qiandaibaobao.dao.PostDAO">
-    <resultMap id="posts" type="com.qiandaibaobao.pojo.Post">
+    <resultMap id="postMap" type="com.qiandaibaobao.pojo.Post">
         <id column="id" property="id"/>
         <result column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="create_time" property="createTime"/>
         <result column="author_id" property="authorId"/>
+        <collection property="comments"  column="{postId=id}" ofType="com.qiandaibaobao.pojo.Comment"
+        select="comments" />
     </resultMap>
-    <select id="posts" resultMap="posts">
+    <resultMap id="commentMap" type="com.qiandaibaobao.pojo.Comment">
+        <id column="id" property="id"/>
+        <result column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+        <result column="author_id" property="authorId"/>
+        <result column="post_id" property="postId"/>
+    </resultMap>
+    <select id="posts" resultMap="postMap">
         select id,title,content,create_time,author_id from post where author_id = #{authorId}
         order by create_time desc
     </select>
+    <select id="comments" resultMap="commentMap">
+        select id, content, create_time, author_id, post_id from comment
+        where post_id = #{postId}
+    </select>
+
+
     <insert id="savePost">
         insert into post (title, content, create_time, author_id)
         values(#{title},#{content},#{createTime},#{authorId})

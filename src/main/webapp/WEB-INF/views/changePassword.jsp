@@ -1,3 +1,4 @@
+<%--@elvariable id="username" type="java.lang.String"--%>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -7,16 +8,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
-<html>
-<head>
-    <title>修改密码</title>
-</head>
-<body>
-${username}, 请输入你的新密码!<br/>
+<label class="control-label" >${username}，请输入新密码</label>
 <form method="post" action="change-password">
     <input type="hidden" name="username" value="${username}">
-    <input type="password" name="newPassword">
+    <input type="password" name="newPassword" placeholder="新密码">
     <button type="submit">提交</button>
 </form>
-</body>
-</html>

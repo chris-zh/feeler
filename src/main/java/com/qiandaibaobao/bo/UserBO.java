@@ -14,10 +14,17 @@ public class UserBO implements IUserBO {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private UserDAO dao;
+
+    /**
+     * 查询User
+     * @param userName 用户名
+     * @param password 加密前的密码
+     * @return
+     */
     public User user(String userName, String password) {
         String salt = dao.userSalt(userName);
         String encryptedPassword = Utils.encrypt(password, salt);
-        return dao.fetchUserByNameAndPassword(userName, encryptedPassword);
+        return dao.user(userName, encryptedPassword);
     }
 
     public User user(int id) {

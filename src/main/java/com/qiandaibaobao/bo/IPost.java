@@ -16,4 +16,6 @@ public interface IPost {
     public Post newPost(String title, String content, int author, Date createTime, List<Comment> comments);
 
     public List<Post> posts(int authorId);
+
+    public Post post(int postId);
 }

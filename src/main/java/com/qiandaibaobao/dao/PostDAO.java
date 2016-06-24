@@ -1,5 +1,6 @@
 package com.qiandaibaobao.dao;
 
+import com.qiandaibaobao.pojo.Comment;
 import com.qiandaibaobao.pojo.Post;
 import org.apache.ibatis.annotations.Param;
 import java.util.Date;

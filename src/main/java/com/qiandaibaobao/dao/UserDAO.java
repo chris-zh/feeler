@@ -23,4 +23,7 @@ public interface UserDAO{
     int countUserName(@Param("name") String userName);
 
     String userSalt(@Param("name") String userName);
+
+
+    User user(@Param("name") String userName, @Param("password") String password);
 }

@@ -1,14 +1,49 @@
 package com.qiandaibaobao.pojo;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+
 /**
  * Created by Administrator on 2016/6/13 0013.
+ * User: 用户
  */
 public class User {
     private int id;
     private String salt;
     private String name;
     private String password;
+    private String avatar;
+    private Date createTime;
+    private List<Post> posts = new ArrayList<>();
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public User setAvatar(String avatar) {
+        this.avatar = avatar;
+        return this;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public User setCreateTime(Date createTime) {
+        this.createTime = createTime;
+        return this;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public User setPosts(List<Post> posts) {
+        this.posts = posts;
+        return this;
+    }
 
     public User() {
     }
