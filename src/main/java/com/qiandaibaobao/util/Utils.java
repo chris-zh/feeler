@@ -2,12 +2,15 @@ package com.qiandaibaobao.util;
 
 import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.User;
+import org.codehaus.plexus.util.Base64;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -131,4 +134,73 @@ public class Utils {
     public static void forward(Model model, Page page) {
         model.addAttribute("page", page.toString()+".jsp");
     }
+
+    /**
+     * 向指定位置写入文件
+     * @param file
+     * @param path
+     * @throws IOException
+     */
+    public static void writeFile(File file, String path) throws IOException {
+        //开始读取文件
+        FileInputStream input = new FileInputStream(file);
+        FileChannel inputChannel = input.getChannel();
+        ByteBuffer buffer = ByteBuffer.allocate((int) inputChannel.size());
+        inputChannel.read(buffer);//读取文件
+        buffer.rewind();//将缓冲区索引重置为0
+        //开始输出文件
+
+        FileOutputStream output = new FileOutputStream(path);
+        FileChannel outputChannel = output.getChannel();
+        outputChannel.write(buffer);
+        buffer.clear();//清除缓冲区
+        input.close();
+        output.close();
+    }
+
+    /**
+     * 向指定位置写入字节
+     * @param bytes
+     * @param path
+     * @throws IOException
+     */
+    public static void writeBytes(byte[] bytes, String path) throws IOException {
+        FileOutputStream output = new FileOutputStream(path);
+        FileChannel outputChannel = output.getChannel();
+        ByteBuffer buffer = ByteBuffer.allocate(bytes.length);
+        buffer.put(bytes);
+        buffer.rewind();
+        outputChannel.write(buffer);
+        buffer.clear();
+        output.close();
+    }
+
+    /**
+     * 编码
+     * @param bstr
+     * @return String
+     */
+    public static String encode(byte[] bstr){
+        return new sun.misc.BASE64Encoder().encode(bstr);
+    }
+
+    /**
+     * 解码
+     * @param str
+     * @return string
+     */
+    public static byte[] decode(String str){
+        byte[] bt = null;
+        String encodingPrefix = "base64,";
+        int contentStartIndex = str.indexOf(encodingPrefix) + encodingPrefix.length();
+//        byte[] imageData = Base64.decodeBase64(str.substring(contentStartIndex));
+        try {
+            sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
+            bt = decoder.decodeBuffer(str.substring(contentStartIndex));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bt;
+    }
+
 }

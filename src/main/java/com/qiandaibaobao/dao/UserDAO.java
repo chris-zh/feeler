@@ -24,6 +24,7 @@ public interface UserDAO{
 
     String userSalt(@Param("name") String userName);
 
-
     User user(@Param("name") String userName, @Param("password") String password);
+
+    void saveAvatar(@Param("id") int id, @Param("avatar") String avatar);
 }

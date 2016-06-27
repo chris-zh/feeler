@@ -9,5 +9,6 @@ public enum Page {
     test,
     userProfile,
     changePassword,
+    userProfileModify,
     CAFABABY
 }

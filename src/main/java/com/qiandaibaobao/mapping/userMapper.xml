@@ -29,6 +29,10 @@
         where name = #{name} and password = #{password}
     </select>
 
+    <update id="saveAvatar">
+        update user set avatar = #{avatar} where id = #{id}
+    </update>
+
     <resultMap id="userMap" type="com.qiandaibaobao.pojo.User">
         <id column="id" property="id"/>
         <result column="name" property="name"/>

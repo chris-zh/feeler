@@ -17,7 +17,7 @@
                 <li class="post">
                     <div class="post-thumbnail">
                         <a href="{{ url_for('.user', username=post.author.username) }}">
-                            <img class="img-rounded profile-thumbnail" src="/static/uploads/{{ post.author.small_image }}">
+                            <img class="img-rounded profile-thumbnail" src="resources/userImage/${user.avatar}">
                         </a>
                     </div>
                     <div class="post-content f-wordbreak">

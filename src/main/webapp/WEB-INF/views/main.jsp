@@ -27,7 +27,7 @@
 <body>
 <div id="horizontal-menu">
     <ul id="std-menu-items">
-        <li class="pure-menu-selected"><a href="#">Flickr</a></li>
+        <li class="pure-menu-selected"><a href="/">首页</a></li>
         <li><a href="#">Messenger</a></li>
         <li><a href="#">Sports</a></li>
         <li><a href="#">Finance</a></li>
@@ -36,7 +36,7 @@
             <ul>
                 <li class="pure-menu-heading">用户资料管理</li>
                 <li class="pure-menu-separator"></li>
-                <li><a href="#">用户档案</a></li>
+                <li><a href="user/${sessionScope.user.id}/modify">用户档案</a></li>
                 <li><a href="change-password">修改密码</a></li>
                 <li><a href="logout">退出登录</a></li>
             </ul>

@@ -1,6 +1,8 @@
 package com.qiandaibaobao.pojo;
 
 
+import com.qiandaibaobao.page.FeelerConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -20,6 +22,20 @@ public class User {
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public String getServerAvatar(){
+        return FeelerConfig.avatarPath + this.avatar;
+    }
+
+    public String getSmallAvatar(){
+        //todo 返回小头像的相对路径
+        return null;
+    }
+
+    public String getBigAvatar(){
+        //todo 返回大头像的相对路径
+        return null;
     }
 
     public User setAvatar(String avatar) {

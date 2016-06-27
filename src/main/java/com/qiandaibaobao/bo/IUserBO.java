@@ -19,4 +19,6 @@ public interface IUserBO {
 
     boolean register(String userName, String password);
     void updateUser(String userName, String password);
+
+    boolean saveAvatar(int id, String avatar, String projectPath);
 }
