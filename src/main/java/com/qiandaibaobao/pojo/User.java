@@ -112,6 +112,20 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof User)){
+            return false;
+        }
+        User u = (User)obj;
+        return u.getId() == this.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId() + this.salt.length();
+    }
+
+    @Override
     public String toString() {
         return String.format("id:%s,name:%s,password:%s", id, name, password);
     }
