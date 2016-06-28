@@ -16,15 +16,15 @@
             <c:forEach var="post" items="${posts}"><%--@elvariable id="user" type="com.qiandaibaobao.pojo.User"--%>
                 <li class="post">
                     <div class="post-thumbnail">
-                        <a href="{{ url_for('.user', username=post.author.username) }}">
-                            <img class="img-rounded profile-thumbnail" src="resources/userImage/${user.avatar}">
+                        <a href="">
+                            <img class="img-rounded profile-thumbnail" src="${pageContext.request.contextPath}/resources/userImage/${user.id}/${user.avatarSmall}">
                         </a>
                     </div>
                     <div class="post-content f-wordbreak">
                         <div class="post-date"><span class="" data-timestamp="2016-06-23T09:56:07Z"
                                                      data-format="fromNow(0)" data-refresh="0"
                                                      style="">${post.getStringCreateTime()}</span></div>
-                        <div class="post-author"><a href="user/${post.authorId}">${user.name}</a> ${post.title}
+                        <div class="post-author"><a href="${pageContext.request.contextPath}/user/${post.authorId}">${user.name}</a> ${post.title}
                         </div>
                         <div class="post-body">
                             <p>${post.content}</p>

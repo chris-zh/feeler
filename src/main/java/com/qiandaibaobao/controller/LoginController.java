@@ -96,7 +96,7 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.POST, value="/change-password")
     public String changePassword(@RequestParam("username") String userName,
                                  @RequestParam("newPassword") String newPassword, Model model, HttpServletResponse response){
-        bo.updateUser(userName, newPassword);
+        bo.changePassword(userName, newPassword);
         model.addAttribute("message", "修改密码成功！");
         return "index";
     }

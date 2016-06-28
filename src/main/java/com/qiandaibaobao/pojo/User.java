@@ -16,30 +16,27 @@ public class User {
     private String salt;
     private String name;
     private String password;
-    private String avatar;
+    private String avatarSmall;
+    private String avatarBig;
     private Date createTime;
     private List<Post> posts = new ArrayList<>();
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarBig() {
+        return avatarBig;
     }
 
-    public String getServerAvatar(){
-        return FeelerConfig.avatarPath + this.avatar;
+    public User setAvatarBig(String avatarBig) {
+        this.avatarBig = avatarBig;
+        return this;
     }
 
-    public String getSmallAvatar(){
-        //todo 返回小头像的相对路径
-        return null;
+    public String getAvatarSmall() {
+        return avatarSmall;
     }
 
-    public String getBigAvatar(){
-        //todo 返回大头像的相对路径
-        return null;
-    }
 
-    public User setAvatar(String avatar) {
-        this.avatar = avatar;
+    public User setAvatarSmall(String avatarSmall) {
+        this.avatarSmall = avatarSmall;
         return this;
     }
 

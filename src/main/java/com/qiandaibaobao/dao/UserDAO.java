@@ -10,13 +10,12 @@ import java.util.Map;
  */
 public interface UserDAO{
 
-    User fetchUserByNameAndPassword(@Param("name")String userName, @Param("password") String password);
 
     User fetchUserById(@Param("id") int id);
 
     void addUser(@Param("name") String userName, @Param("password") String password, @Param("salt") String salt);
 
-    void updateUser(@Param("name") String userName, @Param("password") String password,@Param("salt")String salt, @Param("id") int id);
+    void changePassword(@Param("name") String userName, @Param("password") String password, @Param("salt")String salt, @Param("id") int id);
 
     int fetchUserId(@Param("name") String username);
 
@@ -26,5 +25,5 @@ public interface UserDAO{
 
     User user(@Param("name") String userName, @Param("password") String password);
 
-    void saveAvatar(@Param("id") int id, @Param("avatar") String avatar);
+    void saveAvatar(@Param("id") int id, @Param("avatarBig") String avatarBig, @Param("avatarSmall") String avatarSmall);
 }

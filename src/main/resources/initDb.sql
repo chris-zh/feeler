@@ -25,5 +25,6 @@ author_id int,
 post_id int
 );
 
-ALTER TABLE qb.`user` ADD avatar text NULL;
+ALTER TABLE qb.`user` ADD avatar_0 text NULL;
+ALTER TABLE qb.`user` ADD avatar_1 text NULL;
 ALTER TABLE qb.`user` ADD create_time TIMESTAMP NULL;

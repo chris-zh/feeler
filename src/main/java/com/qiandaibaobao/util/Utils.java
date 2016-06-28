@@ -203,4 +203,15 @@ public class Utils {
         return bt;
     }
 
+    /**
+     * 获得用户头像数组
+     * @param avatar
+     * @return String[] 0-avatarBig 1-avatarSmall
+     */
+    public static String[] avatars(String avatar) {
+        String avatarBig = String.format("%s_%s",avatar, "big.jpg");
+        String avatarSmall = String.format("%s_%s", avatar, "small.jpg");
+        return new String[]{avatarBig, avatarSmall};
+    }
+
 }
