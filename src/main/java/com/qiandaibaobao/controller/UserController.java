@@ -36,7 +36,6 @@ public class UserController {
         return "main";
     }
 
-<<<<<<< HEAD
     @RequestMapping(method = RequestMethod.POST, value="/user/{userId}/modify")
     public String modifyUser(@PathVariable("userId") int userId,
                              @RequestParam("avatar") String avatar, Model model,
@@ -49,19 +48,4 @@ public class UserController {
         Utils.forward(model, Page.userProfile);
         return "main";
     }
-=======
-    @RequestMapping(value="/user/{userId}/modify")
-    public String userProfileModify(@PathVariable("userId") int userId, Model model, HttpSession session){
-        User sessionUser = Utils.sessionUser(session);
-        User user = bo.user(userId);
-        if(user == sessionUser){
-            //todo 跳转到修改用户页面
-        }else{
-            model.addAttribute("message", "你没有权限修改这个用户");
-            Utils.forward(model, Page.userProfile);
-        }
-        return "main";
-    }
-
->>>>>>> 846faba417d09e1e157300bbce8f68291886e555
 }
