@@ -105,6 +105,11 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
     </dependencies>
 	<build>
 		<finalName>feeler</finalName>
@@ -140,3 +145,4 @@
         </plugins>
     </build>
 </project>
+

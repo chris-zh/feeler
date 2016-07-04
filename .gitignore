@@ -3,6 +3,10 @@
 .idea/
 *.iml
 *.db
+context.xml
+feeler.db
+feeler_tomcat.xml
+module_feeler.xml
 /logs/
 
 # Mobile Tools for Java (J2ME)
