@@ -9,7 +9,7 @@ feeler_tomcat.xml
 module_feeler.xml
 .classpath
 .project
-.gitject~
+.project~
 feeler.xml
 feeler.properties
 target/feeler/*
