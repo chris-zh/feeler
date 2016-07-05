@@ -1,0 +1,18 @@
+Spring MVC
+
+Spring MVC的工作原理
+1. 将所有的请求提交给DispatcherServlet
+2. DispatcherServlet找到多个HandlerMapping，找到处理请求的Controller
+   doService --> doDipatcher --> getHandler(request) --> getExecutionChain(path) --> ExecutionChain: Controller和path的映射关系
+  --> 将handler包装成HandlerAdapter，然后调用handle(request)，返回ModelAndView。
+  --> 通过ModelAndView指定的viewName，找到对应的ViewResover，返回view
+  --> 调用view.render 渲染页面
+
+1.spring mvc请所有的请求都提交给DispatcherServlet,它会委托应用系统的其他模块负责负责对请求进行真正的处理工作。
+2.DispatcherServlet查询一个或多个HandlerMapping,找到处理请求的Controller.
+3.DispatcherServlet请请求提交到目标Controller
+4.Controller进行业务逻辑处理后，会返回一个ModelAndView
+5.Dispathcher查询一个或多个ViewResolver视图解析器,找到ModelAndView对象指定的视图对象
+6.视图对象负责渲染返回给客户端。
+
+
