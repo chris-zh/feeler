@@ -15,4 +15,8 @@ Spring MVC的工作原理
 5.Dispathcher查询一个或多个ViewResolver视图解析器,找到ModelAndView对象指定的视图对象
 6.视图对象负责渲染返回给客户端。
 
-
+Spring MVC的配置
+启用注解:使用<context:component-scan base-package=''>标签
+匹配静态资源:使用<mvc:resources mapping='' location=''>标签
+配置RequestMappingHandlerMapping和RequestMappingHandlerAdapter
+配置视图解析器：InternalResourceViewResolver
