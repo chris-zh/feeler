@@ -36,7 +36,8 @@ public class JedisTest {
         Emp emp = new Emp();
         emp.setEmpId("12");
         putEmp(emp);
-        getEmp(12);
+        Emp newEmp = getEmp(12);
+        System.out.println("emp = " + newEmp);
     }
 
     /**

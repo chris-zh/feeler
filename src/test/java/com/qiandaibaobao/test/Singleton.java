@@ -1,5 +1,6 @@
 package com.qiandaibaobao.test;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -9,7 +10,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Singleton {
 
     private static Singleton fuck;
-    static Lock lock = new ReentrantLock();
+    private AtomicInteger a;
+
+    private int b;
+
+    private static Lock lock = new ReentrantLock();
 
     private Singleton() {
         System.out.println("新构造了一个对象:" + this.hashCode() + " by 线程" + Thread.currentThread().getName());
@@ -26,7 +31,7 @@ public class Singleton {
      *
      * @return
      */
-    public static Singleton getFuck() {
+    static Singleton getFuck() {
         if (fuck == null) {
             synchronized (Singleton.class) {
                 if (fuck == null) {
@@ -38,23 +43,23 @@ public class Singleton {
     }
 
     /**
-     * Singleton的双重检测的显示锁实现
-     *
+     * Lock版本
      * @return
      */
-    public static Singleton getInstance() {
+    static Singleton getInstance() {
         if (fuck == null) {
-            lock.lock();
             try {
+                lock.lock();
                 if (fuck == null) {
                     fuck = new Singleton();
                 }
-            } finally {
+            }finally {
                 lock.unlock();
             }
         }
-        return fuck;
+        return null;
     }
+
 
     public static void main(String[] args) {
         Runnable r = () -> System.out.println("任务对象: " + Singleton.getInstance().hashCode());
