@@ -12,7 +12,7 @@ http://www.springframework.org/schema/util
                         http://www.springframework.org/schema/util/spring-util-4.0.xsd"
        default-lazy-init="true">
     <description>Redis配置</description>
-    <!--<context:property-placeholder location="classpath*:*.properties"/>-->
+    <context:property-placeholder location="classpath*:*.properties"/>
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="${redis.maxTotal}"/>
         <property name="maxIdle" value="${redis.maxIdle}"/>
