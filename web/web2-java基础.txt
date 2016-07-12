@@ -27,5 +27,11 @@ JMM Java内存模型
 
 GC
 
+序列化相关
+序列化：将数据结构或对象转换成二进制数据的过程。
+反序列化：将二进制数据转换成数据结构和对象
 
-HTTP协议
+序列化协议：XML、JSON、Protobuf、Thrift和Avro
+Java序列化的方法：实现Serializable接口，或则会用Protobuf库
+序列化相关：类成员变量设置为transient， 会忽略这个字段。
+

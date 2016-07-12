@@ -1,3 +1,5 @@
+0. Java多线程基础知识
+
 1. 原子性，可见性
 原子性：指的是一个操作是不可分割的，就说它具有原子性.可以通过同步技术让非原子性的操作变成原子性操作。
 比如 int i = i + 1;是一个非原子性操作：先读取i的值，给i+1，再给i赋值。
@@ -9,24 +11,63 @@ volatile的作用：
 todo
 
 
-2. wait, notify, notifyAll的使用
+2. 常用API的使用
+wait, notify, notifyAll的使用
 在多线程中，可以把一个对象作为事件对象。通过这个对象的wait，notify, notifyAll来完成线程之间的状态通知。
 notify会唤醒一个等待中的线程，notifyAll会唤醒所有的等待线程。
 
-3. memcached
-memcached的服务端不提供分布式功能，是由客户端实现的
-Memcached的分布式方法
-http://blog.csdn.net/cywosp/article/details/23397179/ 一致性哈希
-http://kb.cnblogs.com/page/42734/ 余数计算
-基于Key-Value的散列表,通过CRC计算键值，将内容存储在不同的机器上。当散列表满了之后，通过LRU机制淘汰掉一部分内容，用以存储
-新的内容。基于libevent.
+线程池
 
-4. 乐观锁，悲观锁
+扩展问题：
+wait和sleep，join有何区别?(看一眼源码就知道了)
+如何阻塞一个线程？
+如何判断两个线程是否相等？
+
+
+3. 锁原理
+乐观锁，悲观锁，互斥锁。。各种锁
+
+CAS原理
+
 http://www.cnblogs.com/lcngu/p/5405890.html
 乐观锁的思路：每次不加锁，认为没有冲突去完成某项操作。如果失败就重试(循环)，直到成功为止。
 乐观锁的实现：用CAS指令Unsafe类提供的基于CAS机制的native方法
 悲观锁的思路：独占锁都是悲观锁，假设最坏的情况，确保只有没有冲突的时候才去执行，导致其他所有线程挂起，等待持有锁的线程释放锁。
 悲观锁的缺陷：线程挂起和恢复的过程存在很大的开销，代价很大。
-
 乐观锁的实例：java.util.concurrent下的原子类使用硬件提供的CAS机制实现同步就是乐观锁的实践。
 悲观锁的实例：Java的synchronized关键字实现的互斥锁就是悲观锁(由JVM实现的锁)
+
+4. JMM(Java内存模型 重点内容)
+
+5. java.util.concurrent并发包的实现原理
+ConcurrentHashMap 线程安全 实现原理(送分题)
+AtomicInteger 类的实现原理(送分题 用CAS机制)
+
+
+6. Memcached(了解即可)
+Memcached的服务端不提供分布式功能，是由客户端实现的
+Memcached的分布式方法
+http://blog.csdn.net/cywosp/article/details/23397179/ 一致性哈希(了解原理)
+http://kb.cnblogs.com/page/42734/ 余数计算(了解原理，知道有这么一个东西)
+基于Key-Value的散列表,通过CRC计算键值，将内容存储在不同的机器上。当散列表满了之后，通过LRU机制淘汰掉一部分内容，用以存储
+新的内容。基于libevent.
+
+7. redis 重点内容
+http://www.yiibai.com/redis/redis_quick_guide.html
+redis的原理
+redis支持的数据结构
+redis集群原理 https://www.zhihu.com/question/21419897  http://blog.csdn.net/yfkiss/article/details/38944179
+redis对事务的支持
+redis的两种持久化的方式
+redis订阅发布模式
+redis的Java连接操作(Jedis)
+
+8. MQ 消息队列
+todo
+
+9. 分布式原理
+
+
+
+
+

@@ -20,3 +20,10 @@ Spring MVC的配置
 匹配静态资源:使用<mvc:resources mapping='' location=''>标签
 配置RequestMappingHandlerMapping和RequestMappingHandlerAdapter
 配置视图解析器：InternalResourceViewResolver
+
+
+hibernate缓存机制
+
+数据库相关：
+
+数据库事务隔离级别
