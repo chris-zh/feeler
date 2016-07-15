@@ -31,30 +31,39 @@ public class LoginController {
     @Autowired
     IPost postbo;
 
+//    @RequestMapping(method = RequestMethod.GET, value = "/")
+//    public String index(HttpSession session, Model model) {
+//        Object u = session.getAttribute("user");
+//        if (u!=null) {
+//            User user = (User)u;
+//            List<Post> posts = postbo.posts(user.getId());
+//            model.addAttribute("posts", posts);
+//            Utils.forward(model, Page.post);
+//            return "main";
+//        } else {
+//            return "index";
+//        }
+//    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public String index(HttpSession session, Model model) {
-        Object u = session.getAttribute("user");
-        if (u!=null) {
-            User user = (User)u;
-            List<Post> posts = postbo.posts(user.getId());
-            model.addAttribute("posts", posts);
-            Utils.forward(model, Page.post);
-            return "main";
-        } else {
-            return "index";
-        }
+    public String loginView() {
+        System.out.println("fuck!");
+        return "/templates/login.html";
     }
+
+
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String login(HttpSession session, Model model) {
+
         Object u = session.getAttribute("user");
         if (u != null) {
-            User user = (User)u;
+            User user = (User) u;
             model.addAttribute("user", user);
             List<Post> posts = postbo.posts(user.getId());
             model.addAttribute("posts", posts);
             Utils.forward(model, Page.post);
             return "main";
-        }else{
+        } else {
             model.addAttribute("message", "请重新登录！");
             return "index";
         }
