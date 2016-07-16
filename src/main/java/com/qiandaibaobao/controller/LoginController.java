@@ -7,6 +7,7 @@ import com.qiandaibaobao.form.RegisterForm;
 import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.Post;
 import com.qiandaibaobao.pojo.User;
+import com.qiandaibaobao.util.JsonUtil;
 import com.qiandaibaobao.util.Utils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,16 @@ public class LoginController {
     public JsonObject register(@RequestBody RegisterForm form) {
         JsonObject r = new JsonObject();
         boolean success = bo.register(form.getUsername(), form.getPassword());
+        Object[] json = {
+                "success",success,
+                "message", "成功",
+                "next", "/login",
+        };
+        try {
+            JsonUtil.toJson(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (success) {
             r.addProperty("success", "true");
             r.addProperty("message", "成功!");
