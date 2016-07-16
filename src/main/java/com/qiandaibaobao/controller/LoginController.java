@@ -1,7 +1,9 @@
 package com.qiandaibaobao.controller;
 
+import com.google.gson.JsonObject;
 import com.qiandaibaobao.bo.IPost;
 import com.qiandaibaobao.bo.IUserBO;
+import com.qiandaibaobao.form.RegisterForm;
 import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.Post;
 import com.qiandaibaobao.pojo.User;
@@ -47,33 +49,54 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String loginView() {
-        System.out.println("fuck!");
         return "/templates/login.html";
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
+    @ResponseBody
+    public JsonObject register(@RequestBody RegisterForm form) {
+        JsonObject r = new JsonObject();
+        boolean success = bo.register(form.getUsername(), form.getPassword());
+        if (success) {
+            r.addProperty("success", "true");
+            r.addProperty("message", "成功!");
+            r.addProperty("next", "/login");
+        } else {
+            r.addProperty("next", "/");
+            r.addProperty("message", "失败！");
+        }
+        return r;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/login")
-    public String login(HttpSession session, Model model) {
-
-        Object u = session.getAttribute("user");
-        if (u != null) {
-            User user = (User) u;
-            model.addAttribute("user", user);
-            List<Post> posts = postbo.posts(user.getId());
-            model.addAttribute("posts", posts);
-            Utils.forward(model, Page.post);
-            return "main";
-        } else {
-            model.addAttribute("message", "请重新登录！");
-            return "index";
-        }
+    public String login() {
+        return "/templates/index.html";
     }
+
+
+//    @RequestMapping(method = RequestMethod.GET, value = "/login")
+//    public String login(HttpSession session, Model model) {
+//
+//        Object u = session.getAttribute("user");
+//        if (u != null) {
+//            User user = (User) u;
+//            model.addAttribute("user", user);
+//            List<Post> posts = postbo.posts(user.getId());
+//            model.addAttribute("posts", posts);
+//            Utils.forward(model, Page.post);
+//            return "main";
+//        } else {
+//            model.addAttribute("message", "请重新登录！");
+//            return "index";
+//        }
+//    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String login(@RequestParam("username") String userName,
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
+
         User user = bo.user(userName, password);
         if (user == null) {
             model.addAttribute("message", "用户名或密码错误，请重试！");
@@ -88,22 +111,24 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String register(@RequestParam("username") String userName,
-                           @RequestParam("password") String password,
-                           Model model) {
-        if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(password)){
-            model.addAttribute("message", "用户名或密码不能为空！");
-            return "index";
-        }
-        boolean success = bo.register(userName, password);
-        if(success){
-            model.addAttribute("message", "注册成功，请登陆！");
-        }else{
-            model.addAttribute("message", "用户名已存在，请重试！");
-        }
-        return "index";
-    }
+//    @RequestMapping(method = RequestMethod.POST, value = "/register")
+//    public String register(@RequestParam("username") String userName,
+//                           @RequestParam("password") String password,
+//                           Model model) {
+//        if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(password)){
+//            model.addAttribute("message", "用户名或密码不能为空！");
+//            return "index";
+//        }
+//        boolean success = bo.register(userName, password);
+//        if(success){
+//            model.addAttribute("message", "注册成功，请登陆！");
+//        }else{
+//            model.addAttribute("message", "用户名已存在，请重试！");
+//        }
+//        return "index";
+//    }
+
+
     @RequestMapping(method = RequestMethod.POST, value="/change-password")
     public String changePassword(@RequestParam("username") String userName,
                                  @RequestParam("newPassword") String newPassword, Model model, HttpServletResponse response){

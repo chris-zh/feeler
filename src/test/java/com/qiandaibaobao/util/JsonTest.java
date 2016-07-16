@@ -3,7 +3,7 @@ package com.qiandaibaobao.util;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.qiandaibaobao.pojo.LoginForm;
+import com.qiandaibaobao.form.LoginForm;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Arrays;

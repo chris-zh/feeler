@@ -1,16 +1,12 @@
 package com.qiandaibaobao.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import com.qiandaibaobao.bo.IUserBO;
 import com.qiandaibaobao.page.Page;
-import com.qiandaibaobao.pojo.LoginForm;
+import com.qiandaibaobao.form.LoginForm;
 import com.qiandaibaobao.pojo.User;
 import com.qiandaibaobao.util.Utils;
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

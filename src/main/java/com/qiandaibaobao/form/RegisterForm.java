@@ -1,17 +1,28 @@
-package com.qiandaibaobao.pojo;
+package com.qiandaibaobao.form;
 
 /**
- * Created by chris.zhang on 16-7-15.
+ * Created by chris.zhang on 16-7-16.
  */
-public class LoginForm {
+public class RegisterForm {
     private String username;
     private String password;
+    private String email;
 
     public String getUsername() {
         return username;
     }
 
-    public LoginForm setUsername(String username) {
+    public String getEmail() {
+        return email;
+    }
+
+    public RegisterForm setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public RegisterForm setUsername(String username) {
+
         this.username = username;
         return this;
     }
@@ -20,7 +31,7 @@ public class LoginForm {
         return password;
     }
 
-    public LoginForm setPassword(String password) {
+    public RegisterForm setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -29,4 +40,5 @@ public class LoginForm {
     public String toString() {
         return String.format("{username: %s, password: %s}", this.username, this.password);
     }
+
 }
