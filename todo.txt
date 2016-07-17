@@ -24,3 +24,5 @@ https://beta.umbreo.com/login
 3. Tomcat访问路径，默认为http://xx:8080/feeler，要更改为http://www.qiandaibaobao.com
   1)用nginx做反向代理，监听8080端口，将请求转发给tomcat
   2)tomcat的配置文件server.xml中，添加context标签，设置path为""，即可将访问路径变为/
+
+Bootstrap调试http://www.layoutit.com/en/dashboard
