@@ -1,8 +1,12 @@
 package com.qiandaibaobao.controller;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qiandaibaobao.bo.IPost;
 import com.qiandaibaobao.bo.IUserBO;
+import com.qiandaibaobao.form.LoginForm;
 import com.qiandaibaobao.form.RegisterForm;
 import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.Post;
@@ -22,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chris.zhang on 2016/6/15 0015.
@@ -34,19 +39,14 @@ public class LoginController {
     @Autowired
     IPost postbo;
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/")
-//    public String index(HttpSession session, Model model) {
-//        Object u = session.getAttribute("user");
-//        if (u!=null) {
-//            User user = (User)u;
-//            List<Post> posts = postbo.posts(user.getId());
-//            model.addAttribute("posts", posts);
-//            Utils.forward(model, Page.post);
-//            return "main";
-//        } else {
-//            return "index";
-//        }
-//    }
+    @RequestMapping(method = RequestMethod.GET, value = "/index")
+    public String indexView(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "/templates/login.html";
+        }
+        return "/templates/index.html";
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String loginView() {
@@ -58,68 +58,38 @@ public class LoginController {
     public JsonObject register(@RequestBody RegisterForm form) {
         JsonObject r = new JsonObject();
         boolean success = bo.register(form.getUsername(), form.getPassword());
-        Object[] json = {
-                "success",success,
-                "message", "成功",
-                "next", "/login",
-        };
-        try {
-            JsonUtil.toJson(json);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         if (success) {
-            r.addProperty("success", "true");
-            r.addProperty("message", "成功!");
+            r.addProperty("success", true);
+            r.addProperty("message", "注册成功，请登录");
             r.addProperty("next", "/login");
         } else {
             r.addProperty("next", "/");
-            r.addProperty("message", "失败！");
+            r.addProperty("success", false);
+            r.addProperty("message", "用户名已存在");
         }
         return r;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String login() {
-        return "/templates/index.html";
+        return "/templates/login.html";
     }
 
-
-//    @RequestMapping(method = RequestMethod.GET, value = "/login")
-//    public String login(HttpSession session, Model model) {
-//
-//        Object u = session.getAttribute("user");
-//        if (u != null) {
-//            User user = (User) u;
-//            model.addAttribute("user", user);
-//            List<Post> posts = postbo.posts(user.getId());
-//            model.addAttribute("posts", posts);
-//            Utils.forward(model, Page.post);
-//            return "main";
-//        } else {
-//            model.addAttribute("message", "请重新登录！");
-//            return "index";
-//        }
-//    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public String login(@RequestParam("username") String userName,
-                        @RequestParam("password") String password,
-                        HttpSession session,
-                        Model model) {
-
-        User user = bo.user(userName, password);
-        if (user == null) {
-            model.addAttribute("message", "用户名或密码错误，请重试！");
-            return "index";
-        } else {
-            model.addAttribute("user", user);
+    @ResponseBody
+    public JsonObject login(@RequestBody LoginForm form, HttpSession session) {
+        User user = bo.user(form.getUsername(), form.getPassword());
+        JsonObject response = new JsonObject();
+        if (user != null) {
             session.setAttribute("user", user);
-            List<Post> posts = postbo.posts(user.getId());
-            model.addAttribute("posts", posts);
-            Utils.forward(model, Page.post);
-            return "main";
+            response.addProperty("success", true);
+            response.addProperty("next", "/index");
+        }else{
+            response.addProperty("success", false);
+            response.addProperty("next", "/login");
+            response.addProperty("message", "用户名或密码错误");
         }
+        return response;
     }
 
 //    @RequestMapping(method = RequestMethod.POST, value = "/register")

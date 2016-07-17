@@ -64,9 +64,9 @@ vip.post = function(url, form, success, error) {
 };
 
 // API normal
-vip.register = function(form, success, error) {
+vip.register = function(form, success) {
     var url = '/register';
-    this.post(url, form, success, error);
+    this.post(url, form, success, success);
 };
 
 vip.login = function(form, success) {
@@ -78,4 +78,9 @@ vip.login = function(form, success) {
 vip.tweetAdd = function(form, success, error) {
     var url = '/api/tweet/add';
     this.post(url, form, success, error);
+};
+
+vip.test = function(form, success) {
+    var url = '/test/post';
+    this.post(url, form, success, success);
 };

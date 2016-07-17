@@ -17,11 +17,23 @@
     <script>
 
         var setup = function () {
-            $('#id-alert-block').toggle();
+            $('#id-div-message').hide();
         };
+
+        var showMessage = function (message, type) {
+            var prefix = 'alert-';
+            var messageClass = prefix + type;
+            var $message = $('#id-div-message');
+            $message.removeClass();
+            $message.addClass('alert alert-dismissable');
+            $message.addClass(messageClass);
+            $message.show();
+            $('#id-div-message-text').html(message);
+        };
+
         var loginForm = function () {
             var keys = [
-                    'username', 'password'
+                'username', 'password'
             ];
             var loginPrefix = 'id-input-login-';
             return formFromKeys(keys, loginPrefix);
@@ -29,39 +41,37 @@
 
         var registerForm = function () {
             var keys = [
-                    'username', 'password', 'email'
+                'username', 'password', 'email'
             ];
             var registerPrefix = 'id-input-register-';
             return formFromKeys(keys, registerPrefix);
         };
 
-
         var login = function () {
             var form = loginForm();
             var success = function (r) {
-                if(r.success) {
-                    log(r.next);
+                if (r.success) {
                     window.location.href = r.next;
-                }else {
+                } else {
                     log(r.message);
-                    alert(r.message);
                 }
+                showMessage(r.message, 'danger');
             };
             vip.login(form, success);
         };
 
         var register = function () {
             var form = registerForm();
-            var success = function(r) {
-                if(r.success) {
+            var success = function (r) {
+                log(r.message);
+                if (r.success) {
                     log(r.next);
 //                    window.location.href = r.next;
-                    $('#id-alert').toggle();
-                    var successAlert = $('#id-alert-message');
-                    successAlert.append("<Strong>" + r.success + "</Strong>")
-                }else {
+                    $('#id-a-login').click();
+                    showMessage(r.message, 'success');
+                } else {
                     log(r.message);
-                    alert(r.message);
+                    showMessage(r.message, 'danger');
                 }
             };
             vip.register(form, success);
@@ -107,53 +117,46 @@
             <div class="row">
                 <div class="col-md-2">
                 </div>
-                <div class="col-md-8">
-                    <div class="alert alert-success alert-dismissable" id="id-alert-block">
+                <div class="col-md-8" id="id-div-content">
 
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                            ×
-                        </button>
-                        <div id="id-alert-message"></div>
-                    </div>
                     <div class="tabbable" id="tabs-176498">
                         <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#panel-login" data-toggle="tab">登录</a>
+                            <li class="active" id="li-tab-login">
+                                <a href="#panel-login" data-toggle="tab" id="id-a-login">登录</a>
                             </li>
-                            <li>
+                            <li id="li-tab-register">
                                 <a href="#panel-register" data-toggle="tab">注册</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="panel-login">
-                                <form role="form">
-                                    <div class="form-group">
+                                <!--<form role="form">-->
+                                <div class="form-group">
 
-                                        <label for="id-input-login-username">
-                                            用户名
-                                        </label>
-                                        <input type="text" class="form-control" id="id-input-login-username"/>
-                                    </div>
-                                    <div class="form-group">
+                                    <label for="id-input-login-username">
+                                        用户名
+                                    </label>
+                                    <input type="text" class="form-control" id="id-input-login-username"/>
+                                </div>
+                                <div class="form-group">
 
-                                        <label for="id-input-login-password">
-                                            密码
-                                        </label>
-                                        <input type="password" class="form-control" id="id-input-login-password"/>
-                                    </div>
-                                    <div class="checkbox">
+                                    <label for="id-input-login-password">
+                                        密码
+                                    </label>
+                                    <input type="password" class="form-control" id="id-input-login-password"/>
+                                </div>
+                                <div class="checkbox">
 
-                                        <label>
-                                            <input type="checkbox"/> 记住我
-                                        </label>
-                                    </div>
-                                    <button type="submit" class="btn btn-default" id="id-button-login">
-                                        登录
-                                    </button>
-                                </form>
+                                    <label>
+                                        <input type="checkbox"/> 记住我
+                                    </label>
+                                </div>
+                                <button class="btn btn-default" id="id-button-login">
+                                    登录
+                                </button>
+                                <!--</form>-->
                             </div>
                             <div class="tab-pane" id="panel-register">
-                                <form role="form">
                                     <div class="form-group">
 
                                         <label for="id-input-register-username">
@@ -173,14 +176,18 @@
                                         <label for="id-input-register-email">
                                             邮箱
                                         </label>
-                                        <input type="email" class="form-control" id="id-input-register-email"/>
+                                        <input type="text" class="form-control" id="id-input-register-email"/>
                                     </div>
                                     <button type="submit" class="btn btn-default" id="id-button-register">
                                         注册
                                     </button>
-                                </form>
                             </div>
                         </div>
+                    </div>
+                    <div class='alert alert-dismissable' id='id-div-message'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <!-- 警告信息 -->
+                        <div id='id-div-message-text'></div>
                     </div>
                 </div>
                 <div class="col-md-2">

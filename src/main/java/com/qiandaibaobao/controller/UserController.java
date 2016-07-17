@@ -1,5 +1,7 @@
 package com.qiandaibaobao.controller;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qiandaibaobao.bo.IUserBO;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,30 +56,26 @@ public class UserController {
     }
     @RequestMapping(method = RequestMethod.GET, value = "/test")
     public String test(Model model) {
-        Utils.forward(model, Page.test);
-        return "test";
+//        Utils.forward(model, Page.test);
+        return "/templates/login.html";
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/test/t1")
+    @RequestMapping(method = RequestMethod.POST, value = "/test/post")
     @ResponseBody
-    public JsonObject userList(@RequestBody LoginForm form) {
+    public String  userList(@RequestBody LoginForm form) {
 //        System.out.println("hahaha");
 //        System.out.println(form);
 //        System.out.println(form.getUsername());
 //        System.out.println(form.getPassword());
         Gson json = new Gson();
-        JsonObject r = new JsonObject();
-        r.addProperty("success", "true");
-        r.addProperty("message", "成功!");
-        r.addProperty("next", "/login");
-        r.addProperty("message", "失败！");
-
-        Map map = new HashMap<>();
-        map.put("haha", "sdff");
-        map.put("dfdf", "asdfsf");
+        Map<String, Object> map = Maps.newHashMap();
+        List<String> list = Lists.asList("数组", new String[]{"数组2", "数组3"});
+        map.put("list", list);
+        map.put("success", true);
+        map.put("next", "/login");
         String a = json.toJson(map);
-        return r;
+        return a;
     }
 }
 
