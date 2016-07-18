@@ -39,13 +39,18 @@ public class LoginController {
     @Autowired
     IPost postbo;
 
+    /**
+     * 跳转页面
+     * @param session
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String indexView(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "/templates/login.html";
         }
-        return "/templates/index.html";
+        return "/templates/main.html";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
@@ -91,23 +96,6 @@ public class LoginController {
         }
         return response;
     }
-
-//    @RequestMapping(method = RequestMethod.POST, value = "/register")
-//    public String register(@RequestParam("username") String userName,
-//                           @RequestParam("password") String password,
-//                           Model model) {
-//        if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(password)){
-//            model.addAttribute("message", "用户名或密码不能为空！");
-//            return "index";
-//        }
-//        boolean success = bo.register(userName, password);
-//        if(success){
-//            model.addAttribute("message", "注册成功，请登陆！");
-//        }else{
-//            model.addAttribute("message", "用户名已存在，请重试！");
-//        }
-//        return "index";
-//    }
 
 
     @RequestMapping(method = RequestMethod.POST, value="/change-password")

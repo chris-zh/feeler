@@ -4,28 +4,38 @@ redis
 memcached
 多线程
 
-熟悉Java 集合，多线程，网络，消息，反射原理
-熟练使用Srping, SpringMVC, Servlet, JSP等常用Web技术
+熟悉Java 集合，多线程，网络，消息，反射等Java核心技术的基本原理
+熟练使用Spring, SpringMVC, Mybatis, Struts等常用Web技术
 熟悉HTTP协议，Servlet原理
-熟练使用Oracle， MySQL等数据库
+熟练使用Oracle， MySQL等常用数据库
+熟悉Python， JavaScript等动态语言
 熟练使用Git, Maven等构建管理工具
-了解Tomcat， Weblogic等常用Web容器的基本原理
-了解Redis， Memcached等缓存技术
-了解Python， JavaScript等脚本语言
+熟悉Tomcat， Netty等常用Web容器的基本原理
+熟悉Redis， Memcached等缓存技术
+了解分布式系统，服务框架，消息中间件，数据库访问层等构建大型Web站点的常用技术
+
+
 
 
 项目：
 
 太平人寿核心业务系统
 
-保全和新契约模块的主要负责人
+财务和调查模块的主要负责人
 系统核心业务的新功能开发和维护
 概要设计和详细设计文档的编写
 组内成员培训和代码Review，以及代码质量管控
 
+泰国三星寿险核心系统
 
-五年银行/保险项目开发经验，熟练使用JAVA/ORACLE/JS/JSP等,参与项目：
-太平寿险核心系统/中国平安年金系统/上海银行企业网银/上海银行中信信托专项资金管理，熟悉金融行业业务与开发流程。
+主要负责
+财务模块的新功能设计和开发
+详细设计文档的编写
+
+
+五年大型Web系统开发经验，熟练使用Java语言及其常用框架
+参与太平寿险核心系统、美国史带保险电话销售平台、泰国三星寿险核心系统、中国大地保险电网销一体化平台等项目
+熟悉互联网金融行业业务与开发流程。
 
 
 熟练使用Java/Oracle/JavaScript/JSP等常用Web技术。拥有5年大型Web系统开发经验。
