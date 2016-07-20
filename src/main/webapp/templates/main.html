@@ -6,6 +6,38 @@
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resources/css/style.css" rel="stylesheet">
     <script src="/resources/js/jquery.js"></script>
+    <script src="/resources/js/api.js"></script>
+    <script>
+        var articles = function () {
+            var success = function (r) {
+                var result = $.parseJSON(r);
+                log(result);
+                if(result.success) {
+                    var $articles = $('#id-div-articles');
+                    var html = '';
+                    var articles = result.articles;
+                    for(var i = 0; i<articles.length;i++){
+                        var article = articles[i];
+                        console.log(article.title+ ' ' +article.content);
+                        html = html + '<h2>' + article.title + '</h2>';
+                        html = html + '<p>' + article.content + '</p>';
+                        html = html + '<p><a class="btn" href="#">View details »</a></p>';
+                    }
+                    $articles.html(html);
+
+                }
+            };
+            vip.articles(success);
+        };
+
+        var __main = function () {
+            articles();
+        };
+
+        $(document).ready(function () {
+            __main();
+        })
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -55,6 +87,7 @@
                             写新文章
                         </button>
                     </div>
+                    <div id="id-div-articles"></div>
                     <h2>
                         Heading
                     </h2>
@@ -70,9 +103,7 @@
                     <p>
                         Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
                     </p>
-                    <p>
-                        <a class="btn" href="#">View details »</a>
-                    </p>
+                    <p><a class="btn" href="#">View details »</a></p>
                     <ul class="pagination">
                         <li>
                             <a href="#">Prev</a>

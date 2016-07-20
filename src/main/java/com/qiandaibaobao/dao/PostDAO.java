@@ -17,4 +17,5 @@ public interface PostDAO {
                          @Param("createTime") Date createTime);
 
     public List<Post> posts(@Param("authorId") int authorId);
+
 }

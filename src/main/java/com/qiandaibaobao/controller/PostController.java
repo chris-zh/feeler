@@ -3,10 +3,14 @@ package com.qiandaibaobao.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.qiandaibaobao.bo.IPost;
 import com.qiandaibaobao.page.Page;
 import com.qiandaibaobao.pojo.Post;
 import com.qiandaibaobao.pojo.User;
+import com.qiandaibaobao.util.JsonUtil;
 import com.qiandaibaobao.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -57,5 +62,19 @@ public class PostController {
             model.addAttribute("message", "请先登录！");
             return "index";
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/articles")
+    @ResponseBody
+    public String articles(HttpSession session) {
+        User user = Utils.sessionUser(session);
+        JsonObject response = new JsonObject();
+        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();
+        List<Post> articles = bo.posts(10);
+        response.addProperty("success", true);
+        response.add("articles", parser.parse(gson.toJson(articles)));
+        gson.toJson(response);
+        return gson.toJson(response);
     }
 }

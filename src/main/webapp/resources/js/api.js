@@ -74,6 +74,11 @@ vip.login = function(form, success) {
     this.post(url, form, success, success);
 };
 
+vip.articles = function (success) {
+    var url = '/articles';
+    this.post(url, '', success, success);
+};
+
 // tweet API
 vip.tweetAdd = function(form, success, error) {
     var url = '/api/tweet/add';

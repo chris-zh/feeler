@@ -1,6 +1,10 @@
 package com.qiandaibaobao.util;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 /**
  * Created by chris.zhang on 16-7-16.
@@ -23,5 +27,12 @@ public class JsonUtil {
             jsonObject.addProperty(key, value);
         }
         return jsonObject;
+    }
+
+    public static JsonObject toJson(List<Object> json) throws Exception {
+        int length = json.size();
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        return null;
     }
 }
