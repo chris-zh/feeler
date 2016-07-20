@@ -61,7 +61,7 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     @ResponseBody
     public JsonObject register(@RequestBody RegisterForm form) {
-        JsonObject r = new JsonObject();
+            JsonObject r = new JsonObject();
         boolean success = bo.register(form.getUsername(), form.getPassword());
         if (success) {
             r.addProperty("success", true);

@@ -4,11 +4,14 @@ redis
 memcached
 多线程
 
-熟悉Java 集合，多线程，网络，消息，反射等Java核心技术的基本原理
+熟悉Java 集合，多线程，网络，消息，反射， IO/NIO等Java核心技术的基本原理
 熟练使用Spring, SpringMVC, Mybatis, Struts等常用Web技术
 熟悉HTTP协议，Servlet原理
+熟悉JVM工作原理，了解常用的GC算法
+熟悉Java多线程编程，理解Java内存模型
 熟练使用Oracle， MySQL等常用数据库
 熟悉Python， JavaScript等动态语言
+熟悉JQuery, Ajax，JSON等前端技术
 熟练使用Git, Maven等构建管理工具
 熟悉Tomcat， Netty等常用Web容器的基本原理
 熟悉Redis， Memcached等缓存技术
