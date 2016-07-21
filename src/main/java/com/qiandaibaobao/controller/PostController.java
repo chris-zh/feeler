@@ -15,10 +15,7 @@ import com.qiandaibaobao.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -77,4 +74,17 @@ public class PostController {
         gson.toJson(response);
         return gson.toJson(response);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/article/{id}")
+    @ResponseBody
+    public String article(@PathVariable String id) {
+        JsonObject data = new JsonObject();
+        JsonParser parse = new JsonParser();
+        Gson gson = new Gson();
+        Post article = bo.post(Integer.valueOf(id));
+        data.addProperty("success", true);
+        data.add("article", parse.parse(gson.toJson(article)));
+        return gson.toJson(data);
+    }
+
 }

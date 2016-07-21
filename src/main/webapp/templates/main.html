@@ -21,10 +21,9 @@
                         console.log(article.title+ ' ' +article.content);
                         html = html + '<h2>' + article.title + '</h2>';
                         html = html + '<p>' + article.content + '</p>';
-                        html = html + '<p><a class="btn" href="#">View details »</a></p>';
+                        html = html + '<p><a class="btn" href="/article/'+article.id+'">View details »</a></p>';
                     }
                     $articles.html(html);
-
                 }
             };
             vip.articles(success);
