@@ -17,6 +17,14 @@ memcached
 熟悉Redis， Memcached等缓存技术
 了解分布式系统，服务框架，消息中间件，数据库访问层等构建大型Web站点的常用技术
 
+1. 集合 2.网络 3. IO 4. 消息 5. 反射 6. 多线程  1周
+7. HTTP, Servlet, Socket，web相关  1~2天
+8. 框架  2天
+9. JVM GC  1天
+10. SQL优化， 数据库原理/实现  1天
+12. JQuery, Ajax, JSON 1天
+13 分布式系统，服务框架，消息框架， 分库分表 2天
+
 
 
 

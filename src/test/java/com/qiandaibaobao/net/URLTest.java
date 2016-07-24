@@ -23,6 +23,7 @@ public class URLTest {
                 System.out.println(data);
                 data = br.readLine();
             }
+
             br.close();
             reader.close();
             inputStream.close();

@@ -1,0 +1,30 @@
+- ArrayList
+  1. ArrayList初始容量为10， 每当add操作时，先检查容量是否满，如果满，扩容1.5倍。
+  2. 扩容的实现：新建一个数组，遍历新数组，将当前数组按索引取出来，添加到新数组中。
+  3. ArrayList是基于Object数组的。
+  4. ArrayList 的性能消耗主要来源于扩容和固定位置的增删。ArrayList固定位置增删，都会导致全量拷贝。(System.copyarray)。
+  5. ArrayList的顺序添加和查询，效率为O(1)，效率很好。固定位置增删的复杂度是O(n)
+  6. ArrayList 创建的时候 需要考虑是否要初始化最小容量，以此避免扩容带来的消耗。
+
+- LinkedList
+  1. 存储：使用链表。因此具有链表的特性。
+  2. 插入和删除都只需要改变链表的索引，不需要移动数据。
+  3.  插入与删除效率高。
+- Vector
+  ArrayList的每一个方法都加上synchronized关键字。线程安全。效率很低，不建议使用。
+
+- HashMap
+  1. hash结构：数组 +　链表 +　红黑树的实现
+      load_factor 加载因子，用来表示填充比(maxCapacity/size) 0.75f
+        也就是说，当hashMap的数组装满超过75%的元素，就要扩容。
+      DEFAULT_INITIAL_CAPACITY 初始化的默认容量：16
+      TREEIFY_THRESHOLD 固定设置为8.当一个桶的节点的个数超过8个，如果继续使用链表的复杂度为O(n)，性能会下降
+        因此要将链表替换成红黑树。log(n)
+      UNTREEIFY_THRESHOLD 固定设置为6.当resize时，根据这个字段判断是否要讲红黑树拆成链表。
+  2. 扩容：当到达数组的75%时，扩容。将容量调整为原来的两倍，其实现原理是新建一个两倍容量的数组，将当前数组拷贝到新数组中。
+      可见扩容很耗时
+  3. hash计算：先由key值通过hash(key)得到h，然后h&(length - 1)得到位置。
+     一般对于哈希表的散列常用的方法有直接定址法，除留余数法等，既要便于计算，又能减少冲突。
+     在Hashtable中就是通过除留余数法散列分布的，具体如下：`int index = (hash & 0x7FFFFFFF) % tab.length;`
+     hash函数的实现： (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16)
+     http://www.2cto.com/kf/201505/401433.html
