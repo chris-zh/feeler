@@ -1,0 +1,10 @@
+java.net包支持各类应用层协议的网络通信
+
+URL类：封装了URL
+URLConnection类：封装了访问网络资源的方法，通过URL.openConnection()方法得到这个类的实例
+
+URL url = new URL("http://www.baidu.com");
+URL url = new URL("ftp://10.1.101.10");
+InputStream inputStream = url.openStream();//打开一个连接，获得数据流
+
+ServerSocket
