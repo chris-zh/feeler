@@ -1,6 +1,10 @@
 package com.qiandaibaobao.bo;
 
 
+import java.lang.ref.PhantomReference;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -13,6 +17,12 @@ public class RandomTest {
         int shit = r.nextInt(100);
         System.out.println("fuck = " + fuck);
         System.out.println("shit = " + shit);
+
+        String a = null;
+        List list = new ArrayList<>();
+        WeakReference r2 = new WeakReference(list);
+
+
     }
 
 
