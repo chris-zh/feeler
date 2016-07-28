@@ -15,8 +15,9 @@ public class MyCollection {
     }
 
     public static void main(String[] args) {
-
-        new HashMap<>();
+        String a = "hello, world";
+        a.substring(0, 4);
+        System.out.println("a = " + a);
     }
 
     public static void fuck1(Map map) {
