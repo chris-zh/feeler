@@ -21,7 +21,7 @@
                         console.log(article.title+ ' ' +article.content);
                         html = html + '<h2>' + article.title + '</h2>';
                         html = html + '<p>' + article.content + '</p>';
-                        html = html + '<p><a class="btn" href="/article/'+article.id+'">View details »</a></p>';
+                        html = html + '<p><a class="btn" name="a-link-articles" id="'+article.id+'" href="javascript:void(0)" onclick="article(this)">View details »</a></p>';
                     }
                     $articles.html(html);
                 }
@@ -29,8 +29,26 @@
             vip.articles(success);
         };
 
+        var article = function (obj) {
+            console.log(obj.id);
+            localStorage.next = '/article/' + obj.id;
+            location.href = '/newArticle';
+        };
+
+        var newArticle = function () {
+            localStorage.next = '';
+            location.href = '/newArticle';
+        };
+
+        var bindActions = function () {
+            $('#id-button-newArticle').on('click', function () {
+                newArticle();
+            });
+        };
+
         var __main = function () {
             articles();
+            bindActions();
         };
 
         $(document).ready(function () {
@@ -82,27 +100,11 @@
                         </li>
                     </ul>
                     <div class="class-div-margin-top-10">
-                        <button type="button" class="btn btn-default">
+                        <button type="button" class="btn btn-default" id="id-button-newArticle">
                             写新文章
                         </button>
                     </div>
                     <div id="id-div-articles"></div>
-                    <h2>
-                        Heading
-                    </h2>
-                    <p>
-                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                    </p>
-                    <p>
-                        <a class="btn" href="#">View details »</a>
-                    </p>
-                    <h2>
-                        Heading
-                    </h2>
-                    <p>
-                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                    </p>
-                    <p><a class="btn" href="#">View details »</a></p>
                     <ul class="pagination">
                         <li>
                             <a href="#">Prev</a>

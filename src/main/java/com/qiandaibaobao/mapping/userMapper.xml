@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qiandaibaobao.dao.UserDAO">
     <select id="fetchUserById" resultMap="userMap">
-        select id, name, password, salt, avatar_Small, avatar_big, create_time from user where id = #{id}
+        select id, name, password, salt, create_time from user where id = #{id}
     </select>
     <insert id="addUser">
         insert into user (name, password, salt) values(#{name}, #{password}, #{salt})
@@ -21,21 +21,15 @@
     </select>
 
     <select id="user" resultMap="userMap">
-        select id, name, password, salt, avatar_Small, avatar_big, create_time from user
+        select id, name, password, salt, create_time from user
         where name = #{name} and password = #{password}
     </select>
-
-    <update id="saveAvatar">
-        update user set avatar_Small = #{avatarSmall}, avatar_big = #{avatarBig} where id = #{id}
-    </update>
 
     <resultMap id="userMap" type="com.qiandaibaobao.pojo.User">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
-        <result column="avatar_Small" property="avatarSmall"/>
-        <result column="avatar_big" property="avatarBig"/>
         <result column="create_time" property="createTime"/>
         <collection property="posts" ofType="com.qiandaibaobao.pojo.Post"
                     column="{author_id=id}" select="com.qiandaibaobao.dao.PostDAO.posts"/>

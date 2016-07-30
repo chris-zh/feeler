@@ -46,6 +46,12 @@ public class PostBO implements IPost {
 
     @Override
     public Post post(int postId) {
-        return null;
+        return dao.post(postId);
     }
+
+    @Override
+    public void updatePost(Post post) {
+        dao.updatePost(post.getTitle(), post.getContent(), post.getUpdateTime(), post.getId());
+    }
+
 }

@@ -20,4 +20,6 @@ public interface IPost {
 
     public Post post(int postId);
 
+    public void updatePost(Post post);
+
 }
