@@ -7,6 +7,7 @@
     <link href="/resources/css/style.css" rel="stylesheet">
     <script src="/resources/js/jquery.js"></script>
     <script src="/resources/js/api.js"></script>
+    <script src="/resources/js/bootstrap.min.js"></script>
     <script>
         var articles = function () {
             var success = function (r) {
@@ -21,7 +22,7 @@
                         console.log(article.title+ ' ' +article.content);
                         html = html + '<h2>' + article.title + '</h2>';
                         html = html + '<p>' + article.content + '</p>';
-                        html = html + '<p><a class="btn" name="a-link-articles" id="'+article.id+'" href="javascript:void(0)" onclick="article(this)">View details »</a></p>';
+                        html = html + '<p><a class="btn" name="a-link-articles" id="'+article.id+'" href="javascript:void(0)" onclick="article(this)">查看 »</a></p>';
                     }
                     $articles.html(html);
                 }
@@ -39,6 +40,7 @@
             localStorage.next = '';
             location.href = '/newArticle';
         };
+
 
         var bindActions = function () {
             $('#id-button-newArticle').on('click', function () {
@@ -73,28 +75,34 @@
                         <li class="active">
                             <a href="#">Home</a>
                         </li>
-                        <li>
-                            <a href="#">Profile</a>
-                        </li>
-                        <li class="disabled">
-                            <a href="#">Messages</a>
-                        </li>
+                        <!--<li>-->
+                            <!--<a href="">Profile</a>-->
+                        <!--</li>-->
                         <li class="dropdown pull-right">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<strong class="caret"></strong></a>
+                            <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">选项<strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">Action</a>
+                                    <a href="http://www.baidu.com">百度一下</a>
                                 </li>
                                 <li>
-                                    <a href="#">Another action</a>
+                                    <a href="http://www.weather.com.cn/weather/101020100.shtml">天气预报</a>
                                 </li>
                                 <li>
-                                    <a href="#">Something else here</a>
+                                    <a href="http://xxbs.sh.gov.cn:8080/weixinpage/index.html">公交实时查询</a>
                                 </li>
                                 <li class="divider">
                                 </li>
                                 <li>
-                                    <a href="#">Separated link</a>
+                                    <a href="http://threejs.org/examples/#webgl_geometry_cube">一个炫酷的网站</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">修改密码(暂未开放)</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a href="/logout">退出</a>
                                 </li>
                             </ul>
                         </li>
@@ -105,29 +113,29 @@
                         </button>
                     </div>
                     <div id="id-div-articles"></div>
-                    <ul class="pagination">
-                        <li>
-                            <a href="#">Prev</a>
-                        </li>
-                        <li>
-                            <a href="#">1</a>
-                        </li>
-                        <li>
-                            <a href="#">2</a>
-                        </li>
-                        <li>
-                            <a href="#">3</a>
-                        </li>
-                        <li>
-                            <a href="#">4</a>
-                        </li>
-                        <li>
-                            <a href="#">5</a>
-                        </li>
-                        <li>
-                            <a href="#">Next</a>
-                        </li>
-                    </ul>
+                    <!--<ul class="pagination">-->
+                        <!--<li>-->
+                            <!--<a href="#">Prev</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">1</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">2</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">3</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">4</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">5</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">Next</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
                 </div>
                 <div class="col-md-1">
                 </div>
