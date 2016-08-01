@@ -7,3 +7,5 @@ jvm内存模型
 动态代理
 springMVC实现机制
 hibernate缓存机制
+-- 值传递和引用传递
+http://guhanjie.iteye.com/blog/1683637

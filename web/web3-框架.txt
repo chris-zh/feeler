@@ -27,3 +27,13 @@ hibernate缓存机制
 数据库相关：
 
 数据库事务隔离级别
+
+Spring IoC的实现原理
+Spring AOP的实现原理
+Spring的事务
+
+Netty 一个Java的网络编程框架，基于NIO
+
+HBase hadoop的数据库，分布式数据库
+Apache Zookeeper 用来协调请求，是一个协调服务
+http://www.cnblogs.com/ITtangtang/p/3978349.html

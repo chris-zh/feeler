@@ -2,6 +2,7 @@ package net;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
 
 /**
  * Created by chris.zhang on 16-7-26.
@@ -17,6 +18,10 @@ public class NetTest {
         PrintWriter writer = new PrintWriter(outputStream);
         writer.write("fuck");
         writer.flush();
+        HashMap map = null;
+//        Thread.currentThread().join(1000);
+//        Thread.currentThread().sleep(1000);
+//        Thread.currentThread().wait(1000);
 //        InputStream inputStream = socket.getInputStream();
 //        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 //        String result = bufferedReader.readLine();
