@@ -123,7 +123,6 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.GET, value="/logout")
     public String logout(HttpSession session, Model model,HttpServletRequest request){
         session.setAttribute("user", null);
-        model.addAttribute("message", "已成功退出！");
-        return "index";
+        return "/templates/login.html";
     }
 }

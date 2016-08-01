@@ -18,4 +18,12 @@ public interface PostDAO {
 
     public List<Post> posts(@Param("authorId") int authorId);
 
+    public Post post(@Param("postId") int postId);
+
+    public void updatePost(@Param("title") String title,
+                         @Param("content") String content,
+                         @Param("updateTime") Date updateTime,
+                           @Param("postId") int postId);
+
+
 }

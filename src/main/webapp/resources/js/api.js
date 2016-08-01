@@ -89,3 +89,24 @@ vip.test = function(form, success) {
     var url = '/test/post';
     this.post(url, form, success, success);
 };
+
+vip.publish = function (form, success) {
+    var url = '/publish';
+    this.post(url, form, success, success);
+};
+
+vip.updateArticle = function (id, form, success) {
+    var url = '/updateArticle/' + id;
+    this.post(url, form, success, success);
+};
+
+vip.article = function (url, success) {
+    this.post(url, null, success, success);
+};
+// vip.newArticle = function () {
+//     var url = '/newArticle';
+//     var response = function (r) {log(r)};
+//     this.get(url, response);
+// };updateArticle
+
+

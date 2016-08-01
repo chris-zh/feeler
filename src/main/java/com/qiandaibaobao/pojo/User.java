@@ -3,6 +3,7 @@ package com.qiandaibaobao.pojo;
 
 import com.qiandaibaobao.page.FeelerConfig;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -16,29 +17,9 @@ public class User {
     private String salt;
     private String name;
     private String password;
-    private String avatarSmall;
-    private String avatarBig;
     private Date createTime;
     private List<Post> posts = new ArrayList<>();
 
-    public String getAvatarBig() {
-        return avatarBig;
-    }
-
-    public User setAvatarBig(String avatarBig) {
-        this.avatarBig = avatarBig;
-        return this;
-    }
-
-    public String getAvatarSmall() {
-        return avatarSmall;
-    }
-
-
-    public User setAvatarSmall(String avatarSmall) {
-        this.avatarSmall = avatarSmall;
-        return this;
-    }
 
     public Date getCreateTime() {
         return createTime;
@@ -126,4 +107,14 @@ public class User {
     public String toString() {
         return String.format("id:%s,name:%s,password:%s", id, name, password);
     }
+
+    public static User getSessionUser(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return null;
+        }else{
+            return user;
+        }
+    }
+
 }

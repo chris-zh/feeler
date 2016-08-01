@@ -1,8 +1,90 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/style.css" rel="stylesheet">
+    <script src="/resources/js/jquery.js"></script>
+    <script src="/resources/js/api.js"></script>
+    <script src="http://cdn.bootcss.com/pagedown/1.0/Markdown.Converter.js"></script>
+    <script>
+
+        var setUp = function () {
+
+        }
+        var converter = new Markdown.Converter();
+
+        var initArticle = function () {
+            var url = localStorage.next;
+            var success = function (r) {
+                var result = $.parseJSON(r);
+                if(result.success) {
+                    console.log(result.article.id)
+                    $('#id-text-title').val(result.article.title);
+                    $('#id-text-title').data('articleid', result.article.id);
+                    $('#id-text-content').val(result.article.content);
+                    var htmlPre = converter.makeHtml((result.article.content));
+                    $('#id-display-contentPre').html(htmlPre);
+                    $('#id-button-publish').addClass('class-feeler-hide');
+                    $('#id-button-update').removeClass('class-feeler-hide');
+                }else {
+                    console.log('失败 ', result);
+                }
+            };
+            if(url != ''){
+                vip.article(url, success);
+            }
+        }
+
+        var publishForm = function () {
+            var keys = [
+                'title', 'content',
+            ];
+            var prefix = 'id-text-';
+            return formFromKeys(keys, prefix);
+        };
+
+        var publish = function () {
+            var form = publishForm();
+            var success = function (r) {
+                var result = $.parseJSON(r);
+                location.href = result.next;
+            };
+            vip.publish(form, success);
+        };
+
+        var updateArticle = function () {
+            var form = publishForm();
+            var success = function (r) {
+                var result = $.parseJSON(r);
+                location.href = result.next;
+            };
+            var articleId = $('#id-text-title').data('articleid');
+            log('articleId ', articleId);
+            vip.updateArticle(articleId, form, success);
+        };
+
+        var bindActions = function () {
+            $('#id-text-content').on('input', function () {
+                var htmlPre = converter.makeHtml($(this).val());
+                $('#id-display-contentPre').html(htmlPre);
+            });
+
+            $('#id-button-publish').on('click', function () {
+                publish();
+            });
+            $('#id-button-update').on('click', function () {
+                updateArticle();
+            });
+        };
+        $(document).ready(function () {
+            bindActions();
+            initArticle();
+            setUp();
+        });
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -14,7 +96,8 @@
                 <div class="col-md-10">
                     <div class="page-header">
                         <h1>
-                            LayoutIt! <small>Interface Builder for Bootstrap</small>
+                            宝刀网
+                            <small>屠龙宝刀 点击就送</small>
                         </h1>
                     </div>
                     <ul class="nav nav-tabs">
@@ -28,7 +111,8 @@
                             <a href="#">Messages</a>
                         </li>
                         <li class="dropdown pull-right">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<strong class="caret"></strong></a>
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<strong
+                                    class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="#">Action</a>
@@ -55,14 +139,22 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-5">
-                    <p>
-                        Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <h2>
+                                <input type="text" placeholder="标题" id="id-text-title"  class="form-control"/>
+                            </h2>
+                            <textarea class="form-control" rows="3" id="id-text-content" placeholder="正文 支持Markdown"></textarea><br>
+                            <button type="button" class="btn btn-default" id="id-button-publish">发布</button>
+                            <button type="button" class="btn btn-default class-feeler-hide" id="id-button-update">更新</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-md-5">
-                    <p>
-                        Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-                    </p>
+                    <h2>
+                        <small>你写的都是辣鸡</small>
+                    </h2>
+                    <div id="id-display-contentPre" class="class-feeler-word-break"></div>
                 </div>
                 <div class="col-md-1">
                 </div>

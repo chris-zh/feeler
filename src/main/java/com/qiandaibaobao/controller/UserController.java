@@ -20,9 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by chris.zhang on 16-6-23.
- */
 @Controller
 public class UserController {
     @Autowired
@@ -47,8 +44,8 @@ public class UserController {
                              @RequestParam("avatar") String avatar, Model model,
                              HttpServletRequest request) {
         String projectPath = request.getSession().getServletContext().getRealPath("");
-        bo.saveAvatar(userId, avatar, projectPath);
-        System.out.println("avatar = " + avatar);
+//        bo.saveAvatar(userId, avatar, projectPath);
+//        System.out.println("avatar = " + avatar);
         User user = bo.user(userId);
         model.addAttribute("user", user);
         Utils.forward(model, Page.userProfile);

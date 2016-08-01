@@ -17,6 +17,17 @@ public class Post {
     private String title;
     private String content;
     private Date createTime;
+    private Date updateTime;
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public Post setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+        return this;
+    }
+
     private int authorId;
     private List<Comment> comments  = new ArrayList<>();
 
@@ -79,11 +90,10 @@ public class Post {
 
     @Override
     public String toString() {
-        return String.format("[post:%s %s %s %s %s %s]", this.id,
+        return String.format("[post:%s %s %s %s]", this.id,
                 this.title,
                 this.content,
-                this.authorId,
-                this.getStringCreateTime(),
-                this.getComments());
+                this.authorId
+                );
     }
 }

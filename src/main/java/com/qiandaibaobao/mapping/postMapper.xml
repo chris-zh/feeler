@@ -8,6 +8,7 @@
         <result column="content" property="content"/>
         <result column="create_time" property="createTime"/>
         <result column="author_id" property="authorId"/>
+        <result column="update_time" property="updateTime"/>
         <collection property="comments"  column="{postId=id}" ofType="com.qiandaibaobao.pojo.Comment"
         select="comments" />
     </resultMap>
@@ -23,14 +24,22 @@
         select id,title,content,create_time,author_id from post where author_id = #{authorId}
         order by create_time desc
     </select>
+
+    <select id="post" resultType="com.qiandaibaobao.pojo.Post">
+        select id, title, content, create_time, author_id from post where id = #{postId}
+    </select>
     <select id="comments" resultMap="commentMap">
         select id, content, create_time, author_id, post_id from comment
         where post_id = #{postId}
     </select>
 
-
     <insert id="savePost">
         insert into post (title, content, create_time, author_id)
         values(#{title},#{content},#{createTime},#{authorId})
     </insert>
+
+    <update id="updatePost">
+        update post set title=#{title}, content=#{content}, update_time = #{updateTime}
+        where id = #{postId}
+    </update>
 </mapper>
