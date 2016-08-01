@@ -105,9 +105,6 @@
         <property name="connectionFactory" ref="jedisConnectionFactory"/>
     </bean>
 
-<<<<<<< HEAD
-    <bean id="jmsQueueTemplate" class="org.springframework"/>
-=======
     <!--<bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">-->
     <!--<property name="connectionFactory">-->
     <!--<bean class="org.apache.activemq.ActiveMQConnectionFactory">-->
@@ -160,6 +157,5 @@
     <!--</bean>-->
     <!--http://haohaoxuexi.iteye.com/blog/1893038-->
 
->>>>>>> 75c082b3480fab0d0a99fdb73a8ee0919a32843f
 
 </beans>
