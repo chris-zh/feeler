@@ -5,6 +5,7 @@ import com.qiandaibaobao.test.TestBO;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 这个类的包名为com.qiandaibaobao.IocTest
@@ -42,6 +43,8 @@ public class IocTest {
      * @throws Exception
      */
     public static Object ioc() throws Exception {
+        ConcurrentHashMap a = null;
+
         //读取文件
         File file = new File("f:\\bean.txt");
         InputStream inputStream = new FileInputStream(file);

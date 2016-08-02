@@ -1,0 +1,327 @@
+************************集合********************************
+
+- ArrayList
+  1. ArrayList初始容量为10， 每当add操作时，先检查容量是否满，如果满，扩容1.5倍。
+  2. 扩容的实现：新建一个数组，遍历新数组，将当前数组按索引取出来，添加到新数组中。
+  3. ArrayList是基于Object数组的。
+  4. ArrayList 的性能消耗主要来源于扩容和固定位置的增删。ArrayList固定位置增删，都会导致全量拷贝。(System.copyarray)。
+  5. ArrayList的顺序添加和查询，效率为O(1)，效率很好。固定位置增删的复杂度是O(n)
+  6. ArrayList 创建的时候 需要考虑是否要初始化最小容量，以此避免扩容带来的消耗。
+
+- LinkedList
+  1. 存储：使用链表。因此具有链表的特性。
+  2. 插入和删除都只需要改变链表的索引，不需要移动数据。
+  3. 插入与删除效率高。
+  4. 查询要遍历所有的节点，因此查询慢
+- Vector
+  ArrayList的每一个方法都加上synchronized关键字。线程安全。效率很低，不建议使用。
+
+- HashMap(完美秒杀版 要结合源码一起看)
+  http://www.2cto.com/kf/201505/401433.html
+  1. hash结构：数组 +　链表 +　红黑树的实现
+      load_factor 加载因子，用来表示填充比(maxCapacity/size) 0.75f
+        也就是说，当hashMap的数组装满超过75%的元素，就要扩容。
+      DEFAULT_INITIAL_CAPACITY 初始化的默认容量：16
+      TREEIFY_THRESHOLD 固定设置为8.当一个桶的节点的个数超过8个，如果继续使用链表的复杂度为O(n)，性能会下降
+        因此要将链表替换成红黑树。log(n)
+      UNTREEIFY_THRESHOLD 固定设置为6.当resize时，根据这个字段判断是否要讲红黑树拆成链表。
+  2. 扩容：当到达数组的75%时，扩容。将容量调整为原来的两倍，其实现原理是新建一个两倍容量的数组，将当前数组拷贝到新数组中。
+      可见扩容很耗时
+  3. hash计算：先由key值通过hash(key)得到h，然后h&(length - 1)得到位置。
+     一般对于哈希表的散列常用的方法有直接定址法，除留余数法等，既要便于计算，又能减少冲突。
+     在Hashtable中就是通过除留余数法散列分布的，具体如下：`int index = (hash & 0x7FFFFFFF) % tab.length;`
+     hash函数的实现： (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16)
+     hashcode 无符号右移16位，再跟hashcode异或运算
+     http://www.2cto.com/kf/201505/401433.html
+  4.填充比load_factor: 填充比大，说明装的更满，空间利用率高，但是查找效率低。
+      填充比小，空间利用率低，冲突的概率更低，效率更高(可能)。空间利用率和查找效率要有平衡。
+  5. putVal方法:
+     1) 检测tab[]是否为null，如果为null，resize()，分配内存。
+     2) 将入参key进行hash计算，得到索引i，检查tab[i]是否为null，如果是则直接添加，否则说明检测到冲突。下一步处理冲突
+     3) 处理冲突：先hash计算得到索引，如果发现该索引已被占用，检测第一个节点的类型(链表或者红黑树的第一个节点)，
+              将新节点挂在链表或者红黑树上
+
+- Set
+  1. HashSet 基于HashMap的实现，因此HashSet也具有HashMap的大部分特性
+     将集合元素作为key值存入hashMap， 将静态对象Object PRESENT作为Value存入hashMap
+     查找复杂度：如果不冲突，复杂度为O(1)， 如果冲突，如果桶为链表，复杂度为O(n)，如果为红黑树，复杂度为O(logn)
+  2. HashSet的存储原理是将元素作为key存入hashMap，因此不能存储相同的元素。
+
+- LinkedHashMap
+  1. 基于链表的HashMap的实现。桶的每一个节点都是链表的节点，该节点保存了当前上一个节点和下一个节点的引用。
+     因此是有序的。
+
+
+**************************多线程**************************
+#多线程
+原子性：一个操作是不可分割的，就说它具有原子性。
+可见性：一个线程修改了共享变量，另一个线程马上就能看到。
+怎么才能保证可见性：加锁同步，或者用volatile
+volatile：可以保证可见性，加了volatile的共享变量，每次从主存中读取都一定是最新的值
+    volatile变量的读写是直接读取内存，而不是从工作内存读。
+    禁止重排序：编译器将代码执行的顺序优化，以提高性能。编译器重排序和运行时重排序
+    volatile变量可禁止重排序。
+
+#wait, notify, notifyAll的使用
+在多线程中，可以把一个对象作为事件对象。通过这个对象的wait，notify, notifyAll来完成线程之间的状态通知。
+notify会唤醒一个等待中的线程，notifyAll会唤醒所有的等待线程。
+
+#如何阻塞一个线程？
+wait, join, sleep, 无限循环，各种方法...
+
+#如何判断两个线程是否相等？
+看id是否相等
+
+#wait, join, sleep
+    sleep的thread的方法，不会释放锁，不会阻碍其他线程的执行
+    wait是object的方法，当前线程阻塞，等待其他线程调用notify和notifyAll来唤醒这个线程。会释放锁。
+    join，将一个线程加入到另外一个线程之中，阻塞线程，当前线程执行完之后，另外一个线程才能执行。
+        当A线程执行到了B线程的join()方法时，A就会等待，等B线程都运行完，A线程才会执行
+
+#线程池：
+通过Executors的工厂方法创建线程池，类型是ExecutorService
+newFixedThreadPool 固定线程数量的线程池
+newSingleThreadExecutor 单任务线程池 每次只执行一个线程，其他线程排队执行
+newCachedThreadPool 可变尺寸的线程池，根据需要新建线程，当以前的线程空闲时可以重用
+newScheduledThreadPool 可以设置线程延迟执行，或者定时执行
+
+
+#CAS原理
+
+http://www.cnblogs.com/lcngu/p/5405890.html
+乐观锁的思路：每次不加锁，认为没有冲突去完成某项操作。如果失败就重试(循环)，直到成功为止。
+乐观锁的实现：用CAS指令Unsafe类提供的基于CAS机制的native方法
+悲观锁的思路：独占锁都是悲观锁，假设最坏的情况，确保只有没有冲突的时候才去执行，导致其他所有线程挂起，等待持有锁的线程释放锁。
+悲观锁的缺陷：线程挂起和恢复的过程存在很大的开销，代价很大。
+乐观锁的实例：java.util.concurrent下的原子类使用硬件提供的CAS机制实现同步就是乐观锁的实践。
+悲观锁的实例：Java的synchronized关键字实现的互斥锁就是悲观锁(由JVM实现的锁)
+
+#JMM(Java内存模型 重点内容) //todo
+GC算法//todo
+
+
+#java.util.concurrent并发包的实现原理
+ConcurrentHashMap 线程安全 实现原理(送分题)
+       分段加锁机制：ConcurrentHashMap 的存储结构是基于Segment，每个Segment就是一个小的hashtable
+       桶的每一个节点的元素是final entry，只有value属性是可变的，其他的所有字段都是final类型
+       因此天然线程安全。ConcurrentHashMap可以支持并发的读取和存储，它给每一个segment加锁，而不是给
+       整个hashmap加锁，因此比hashtable的性能更好。
+
+#AtomicInteger 类的实现原理(送分题 用CAS机制)
+    硬件提供的cas机制。在java层面是Unsafe类提供的native方法。
+
+
+#Memcached(了解即可)
+Memcached的服务端不提供分布式功能，是由客户端实现的
+Memcached的分布式方法
+http://blog.csdn.net/cywosp/article/details/23397179/ 一致性哈希(了解原理)
+http://kb.cnblogs.com/page/42734/ 余数计算(了解原理，知道有这么一个东西)
+基于Key-Value的散列表,通过CRC计算键值，将内容存储在不同的机器上。当散列表满了之后，通过LRU机制淘汰掉一部分内容，用以存储
+新的内容。基于libevent.
+
+#redis 重点内容
+http://www.yiibai.com/redis/redis_quick_guide.html
+redis的原理
+    基于Key-Value的散列表的内存数据库。redis是单线程的程序
+特点：
+    高效，能支持每秒110万次设置操作，8万次读取操作
+    类型丰富：支持字符串，列表，集合，哈希等数据结构
+    操作都是原子的：对多线程并发读写有良好的支持
+
+redis支持的数据结构
+    字符串，列表，集合，哈希
+
+redis集群原理(知道概念即可)
+    https://www.zhihu.com/question/21419897  http://blog.csdn.net/yfkiss/article/details/38944179
+    Redis Sharding集群，采用一致性哈希算法
+    Redis Cluster，Redis官方推出的集群方案
+
+redis对事务的支持
+    redis客户端发出一个multi指令，其后的所有命令都放在一个队列中，按顺序执行。最后发出exec命令来执行。
+    multi和exec之间的命令可作为一个原子性事物。如果失败会回退。
+    discard指令来取消一个事物。
+    watch指令用来监控key，如果key发生变化，会导致事物失败。watch指令可用来实现乐观锁(cas方法)。因为redis不提供任何加锁指令。
+
+redis的两种持久化的方式
+    Snapshotting:将内存中的数据以快照的形式写入二进制文件中，可以通过配置自动做快照持久化。
+    Append-only file：aof方式是redis将每一个收到的写命令通过write函数追加到文件中。有三种方式：
+        1. 每次收到命令立即持久化，最慢，但是持久化效果最好。不推荐用。
+        2. 每秒钟持久化，将缓存一秒内的命令。折中方案。
+        3. 完全依赖os的缓存，性能最好，持久化没保证。
+redis订阅发布模式
+    SUBSCRIBE ：订阅一个频道，收到这个频道里的所有消息
+    PUBLISH ：将消息发布到一个频道，发布之后订阅者可收到消息。
+redis的Java连接操作(Jedis)
+    非常简单，跟jdbc类似。
+
+#消息队列
+activemq
+    apache activemq：一个消息队列，支持两种模式：
+        1. 点对点，一个发布者一个消费者
+        2. pub/sub， 一个发布者多个消费者
+java操作：用spring的jmsTemplate去发送和接受消息。
+    生产者通过jmsTemplate发送消息
+    消费者实现MessageListener，通过监听接受消息。
+一般的用法：
+    web应用通过接口发送消息给activemq，另外一个应用监听activemq，将收到的消息放入redis中。
+    web应用从redis中读取消息。
+
+9. 分布式原理
+    一致性哈希：设置一个2^23个桶的hash环，将请求经过hash，映射到hash环的桶中。
+    同样将服务节点也经过hash映射到hash环中。每个请求经过查询算法，逆时针查找最近的服务节点，
+    将请求交给这个服务节点去处理。
+    求余算法：给请求编号，将请求除以一个服务节点的个数，余数就是服务节点
+
+************************************************************************
+JVM基础
+
+问题：对JVM的了解？
+JVM运行时数据区域：
+/*
+方法区： 用于存储虚拟机加载的类信息，常量，静态变量，JIT编译后的代码，所有线程共享
+堆：所有线程共享，用来存储实例对象。
+虚拟机栈：线程私有，生命周期与线程相同，每个方法被执行的时候创建一个栈帧，一个方法的调用就是栈帧从入栈到出栈的过程。
+    栈帧的结构：本地变量表，操作数栈，动态链接，方法出口。
+        本地变量表：存放各种基本数据类型，对象引用，returnAddress（指向一个opcode）
+本地方法栈：跟虚拟机栈类似，用来支持本地方法的调用
+程序计数器：存储当前线程所执行的字节码的指示器，改变程序计数器的值来改变下一条执行的指令。
+    如果当前执行的是Java代码，程序计数器保存JVM正在执行的opcode的地址，如果是native代码，程序计数器的值是空*/
+
+类加载机制
+    双亲委托机制：Java虚拟机的体系结构分为4层，Bootstrap Classloader，Extension Classloader,Application Classloader
+        User Classloader。
+        /*如果一个类加载器收到了类加载请求，它首先不会自己去尝试加载这个类，而是把类加载请求委派给父类加载器去完成。
+        每一层的类加载器都把类加载请求委派给父类加载器，直到所有的类加载请求都应该传递给顶层的启动类加载器。
+        如果顶层的启动类加载器无法完成加载请求，子类加载器尝试去加载，如果连最初发起类加载请求的类加载器也无法完成加载请求时
+        ，将会抛出ClassNotFoundException，而不再调用其子类加载器去进行类加载。*/
+    自定义Classloader，继承Classloader，覆盖findClass方法。
+
+
+
+
+#序列化相关
+序列化：将数据结构或对象转换成二进制数据的过程。
+反序列化：将二进制数据转换成数据结构和对象
+
+序列化协议：XML、JSON、Protobuf、Thrift和Avro
+Java序列化的方法：实现 Serializable 接口，或则会用Protobuf库
+序列化相关：类成员变量设置为transient， 会忽略这个字段。
+
+#对象克隆
+    浅克隆和深克隆：浅克隆只是复制对象的引用
+    深克隆：将对象的每一个属性全部都克隆一遍，或者将对象序列化，再反序列化，得到全新的对象
+
+*******************************框架*******************************
+Spring MVC
+
+Spring MVC的工作原理
+1. 将所有的请求提交给DispatcherServlet
+2. DispatcherServlet找到多个HandlerMapping，找到处理请求的Controller
+   doService --> doDipatcher --> getHandler(request) --> getExecutionChain(path) --> ExecutionChain: Controller和path的映射关系
+  --> 将handler包装成HandlerAdapter，然后调用handle(request)，返回ModelAndView。
+  --> 通过ModelAndView指定的viewName，找到对应的ViewResover，返回view
+  --> 调用view.render 渲染页面
+
+1.spring mvc请所有的请求都提交给DispatcherServlet,它会委托应用系统的其他模块负责负责对请求进行真正的处理工作。
+2.DispatcherServlet查询一个或多个HandlerMapping,找到处理请求的Controller.
+3.DispatcherServlet请请求提交到目标Controller
+4.Controller进行业务逻辑处理后，会返回一个ModelAndView
+5.Dispathcher查询一个或多个ViewResolver视图解析器,找到ModelAndView对象指定的视图对象
+6.视图对象负责渲染返回给客户端。
+
+Spring MVC的配置
+启用注解:使用<context:component-scan base-package=''>标签
+匹配静态资源:使用<mvc:resources mapping='' location=''>标签
+配置RequestMappingHandlerMapping和RequestMappingHandlerAdapter
+配置视图解析器：InternalResourceViewResolver
+
+
+
+
+
+#hibernate缓存机制
+    http://www.cnblogs.com/wean/archive/2012/05/16/2502724.html
+
+#数据库事务隔离级别
+    数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，
+    这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。
+
+#Spring IoC的实现原理 //todo
+#Spring AOP的实现原理 //todo
+#Spring的事务 //todo
+
+#Netty 一个Java的网络编程框架，基于NIO//todo
+
+#HBase hadoop的数据库，分布式数据库//todo
+#Apache Zookeeper 用来协调请求，是一个协调服务//todo
+    http://www.cnblogs.com/ITtangtang/p/3978349.html
+
+#tomcat调优//todo
+#spring事务传播机制//todo
+#spring容器类型//todo
+
+#spring的事务隔离级别
+隔离级别 	含义
+ISOLATION_DEFAULT	使用数据库默认的事务隔离级别
+ISOLATION_READ_UNCOMMITTED	允许读取尚未提交的修改，可能导致脏读、幻读和不可重复读
+ISOLATION_READ_COMMITTED 	允许从已经提交的事务读取，可防止脏读、但幻读，不可重复读仍然有可能发生
+ISOLATION_REPEATABLE_READ
+对相同字段的多次读取的结果是一致的，除非数据被当前事务自生修改。可防止脏读和不可重复读，但幻读仍有可能发生
+ISOLATION_SERIALIZABLE 	完全服从ACID隔离原则，确保不发生脏读、不可重复读、和幻读，但执行效率最低。
+
+反射
+动态代理
+
+hibernate缓存机制
+    缓存是为了减少对数据库的访问
+    缓存有两类：
+    一级缓存，session缓存。内置的，不能卸载。session对应一个事务，
+    二级缓存，sessionFactory缓存，对应SessionFactory的生命周期，是进程范围和集群范围的缓存，有可能出现并发问题。
+    事务隔离级别。二级选缓存是可选的。
+
+    什么样的数据适合放在二级缓存中：
+    很少被修改的数据，不是很重要的数据，允许偶尔并发的数据
+    不会被并发访问的数据
+
+    不适合：
+    经常被修改的数据， 不允许并发访问的数据， 与其他应用共享的数据。
+
+    Hibernate查找对象如何应用缓存？
+    根据ID访问，首先从一级缓存中查，如果查不到从二级缓存查。如果查不到再从数据库查。查询到之后再同步更新缓存。
+
+    Hibernate管理缓存实例
+    调用save()、update()或saveOrUpdate()方法传递一个对象时，或使用load()、
+    get()、list()、iterate() 或scroll()方法获得一个对象时, 该对象都将被加入到Session的内部缓存中。
+    当随后flush()方法被调用时，对象的状态会和数据库取得同步。 如果你不希望此同步操作发生，或者你正处理大量对象、
+    需要对有效管理内存时，你可以调用evict() 方法，从一级缓存中去掉这些对象及其集合。
+
+
+-- 值传递和引用传递
+http://guhanjie.iteye.com/blog/1683637
+
+
+*************************网络***********************************
+java.net包支持各类应用层协议的网络通信
+
+Socket是两个主机之间的一个连接
+基本操作：连接远程机器， 发送数据， 接受数据， 关闭连接， 绑定端口， 监听入站数据， 在绑定的端口上接受来自远程机器的连接。
+Socket的发送和接受数据，通过输入流和输出流
+连接是全双工的，连接的两台机器可以同时发送和接受数据。
+关闭socket： socket.close() 将关闭socket，以及inputStream和outputStream
+
+ServerSocket 用于创建一个服务器连接，它监听一个端口，调用accept()方法，阻塞程序， 等待客户端连接。
+当有一个客户端Socket连接到达时，返回一个Socket，可用于通信。通信结束后要关闭socket
+一般将accept()方法放在一个无限循环中，循环处理请求。
+
+
+URL类：封装了URL
+URLConnection类：封装了访问网络资源的方法，通过URL.openConnection()方法得到这个类的实例
+
+构造一个URL对象，调用openConnection()方法获得一个URLConnection对象
+配置这个对象
+读取request headers
+获得输入流并读取数据
+获得输出流并写入数据
+关闭连接
+
+**************************************杂七杂八的知识*****************************
