@@ -88,6 +88,10 @@ newScheduledThreadPool 可以设置线程延迟执行，或者定时执行
 
 #CAS原理
 
+更新操作的时候，先检测变量的值是否是预期值，如果是，执行更新，如果不是，放弃重试。
+读取一个变量a，它的值是0，然后给它加1，先判断它当前是否仍然是0，如果是就加1，否则就放弃。
+这种技术可以不加锁实现同步。
+
 http://www.cnblogs.com/lcngu/p/5405890.html
 乐观锁的思路：每次不加锁，认为没有冲突去完成某项操作。如果失败就重试(循环)，直到成功为止。
 乐观锁的实现：用CAS指令Unsafe类提供的基于CAS机制的native方法
@@ -97,15 +101,22 @@ http://www.cnblogs.com/lcngu/p/5405890.html
 悲观锁的实例：Java的synchronized关键字实现的互斥锁就是悲观锁(由JVM实现的锁)
 
 #JMM(Java内存模型 重点内容) //todo
+Java的线程是通过共享变量来同步数据的。Java内存模型规定，共享变量存储在主内存中，每个线程拥有自己的工作内存。当一个线程获得共享变量时，
+首先从主内存读取共享变量（read）， 然后将读取的值放入工作内存的一个临时变量中（load），再将此变量传送给执行引擎(use),
+执行引擎将变量传输给工作内存（assign），然后将此变量放入工作内存的一个临时变量中(store)，再将此变量传输给主内存(write)
+
+happens-before原则：待补充//todo
+
+
 GC算法//todo
 
 
 #java.util.concurrent并发包的实现原理
 ConcurrentHashMap 线程安全 实现原理(送分题)
-       分段加锁机制：ConcurrentHashMap 的存储结构是基于Segment，每个Segment就是一个小的hashtable
-       桶的每一个节点的元素是final entry，只有value属性是可变的，其他的所有字段都是final类型
-       因此天然线程安全。ConcurrentHashMap可以支持并发的读取和存储，它给每一个segment加锁，而不是给
-       整个hashmap加锁，因此比hashtable的性能更好。
+       使用分段加锁的机制：与HashMap不同，ConcurrentHashMap的存储结构是Segment[]，每一个Segment相当于一个小的hashtable。
+       在并发操作ConcurrentHashMap时，每次只对一个Segment加锁。因此有效提高了并发的效率。
+       ConcurrentHashMap解决冲突时同样使用链表，但是它使用了HashEntry作为节点。HashEntry除了value之外，其他的属性都是不可变的
+       因此不能在中间添加或者删除节点，只能将新的节点放在尾部。这样是为了让读操作不需要加锁(因为读到的是不可变类型)。
 
 #AtomicInteger 类的实现原理(送分题 用CAS机制)
     硬件提供的cas机制。在java层面是Unsafe类提供的native方法。
@@ -247,7 +258,24 @@ Spring MVC的配置
     这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。
 
 #Spring IoC的实现原理 //todo
+    先是验证xml：获取验证模式：DTD和XSD，获取Document， 验证
+    解析BeanDefinition，一个接口，它是xml的bean标签在容器内的表现形式，包括bean标签的所有属性
+    解析属性，解析子标签（包括构造函数，property），全部放到BeanDefinition里。到目前为止解析xml完成，得到了BeanDefinition形式的bean。
+    然后注册BeanDefinition，把beanName作为key，beanDefinition作为value放进beanDefinitionMap里。可以设置是否允许覆盖。
+    bean的加载就是通过getBean方法，从beanDefinitionMap里获取bean的实例的过程。IoC主要发生在这里。
+    首先通过beanName去查找beanDefinition,然后实例化这个bean，bean的注入在这里通过反射的手段，调用对应属性的set方法去注入。
+    发生循环依赖，有三种：
+    1. 构造器循环依赖，无解，报错
+    2. setter循环依赖：通过回调的方式，暴露一个工厂方法，返回一个未实例化完成的bean的引用。因此可以将bean和依赖的bean的引用一起放入
+        创建中bean池，然后用setter方法将此引用注入bean。
+    3. 对prototype的循环依赖：无法解决。
+
+
+
+
+
 #Spring AOP的实现原理 //todo
+
 #Spring的事务 //todo
 
 #Netty 一个Java的网络编程框架，基于NIO//todo
@@ -325,3 +353,17 @@ URLConnection类：封装了访问网络资源的方法，通过URL.openConnecti
 关闭连接
 
 **************************************杂七杂八的知识*****************************
+#分库分表
+数据切分：（分库规则和路由规则）
+1. 根据id切分，1~10000在db1， 10001~20000在db2
+2. 用一个特定的数字对id取模，得出的结果与数据库做映射
+3. 建立一个db， 保存id与db的映射
+
+数据库集群
+master-slave 一个master和多个slave，数据是完全一致的。master负责读写，slave负责读。master定期将数据推送到slave
+来了一个查询请求，通过哈希算法，算出给那个db
+
+负载均衡器：
+    随机负载均衡：平均将请求分发到每一个db
+    加权负载均衡：给每一个db设置权值， 根据权值的比例，给每一台机器分配多少百分比的请求
+
