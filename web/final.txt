@@ -266,19 +266,26 @@ Spring MVC的配置
     首先通过beanName去查找beanDefinition,然后实例化这个bean，bean的注入在这里通过反射的手段，调用对应属性的set方法去注入。
     发生循环依赖，有三种：
     1. 构造器循环依赖，无解，报错
-    2. setter循环依赖：通过回调的方式，暴露一个工厂方法，返回一个未实例化完成的bean的引用。因此可以将bean和依赖的bean的引用一起放入
+    2. setter循环依赖：只能解决单例的bean的循环依赖,通过回调的方式，暴露一个工厂方法ObjectFactory，返回一个未实例化完成的bean的引用。因此可以将bean和依赖的bean的引用一起放入
         创建中bean池，然后用setter方法将此引用注入bean。
+        例子：A和B互相引用。创建A，然后填充A的属性，发现B未实例化，去创建B，填充B，发现需要A。
+            这时候，通过ObjectFactory得到A的引用，填充B完成（此时填充到Ｂ里的Ａ还没有实例化完成）。Ｂ实例化完成。然后继续填充Ａ，Ａ实例化完成。
     3. 对prototype的循环依赖：无法解决。
 
 
 
 
 
+
 #Spring AOP的实现原理 //todo
+横向的通过配置的方式编织业务代码。
+spring的aop标签配置，或者@AspectJ注解。
+AOP可以用java动态代理和cglib(动态操作class)两种方法实现。
 
 #Spring的事务 //todo
 
-#Netty 一个Java的网络编程框架，基于NIO//todo
+#Netty 一个Java的网络编程框架，基于NIO
+    异步，事件驱动，nio的网络框架
 
 #HBase hadoop的数据库，分布式数据库//todo
 #Apache Zookeeper 用来协调请求，是一个协调服务//todo
@@ -286,7 +293,28 @@ Spring MVC的配置
 
 #tomcat调优//todo
 #spring事务传播机制//todo
-#spring容器类型//todo
+
+    PROPAGATION_REQUIRED
+    如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。这是 最常见的选择。
+    PROPAGATION_SUPPORTS
+    支持当前事务，如果当前没有事务，就以非事务方式执行。
+    PROPAGATION_MANDATORY
+    使用当前的事务，如果当前没有事务，就抛出异常。
+    PROPAGATION_REQUIRES_NEW
+    新建事务，如果当前存在事务，把当前事务挂起。
+    PROPAGATION_NOT_SUPPORTED
+    以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。
+    PROPAGATION_NEVER
+    以非事务方式执行，如果当前存在事务，则抛出异常。
+    PROPAGATION_NESTED
+    如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与 PROPAGATION_REQUIRED 类似的操作。
+
+
+#spring容器类型
+    beanFactory是spring的核心容器，负责bean的整个生命周期的管理
+    其实现类，xmlbeanfactory, applicationContext 最常用的容器.
+    applicationContext还有xmlWebApplicationContext, FileSystemApplicationContext
+    ClassPathXmlApplicationContext
 
 #spring的事务隔离级别
 隔离级别 	含义
@@ -298,7 +326,10 @@ ISOLATION_REPEATABLE_READ
 ISOLATION_SERIALIZABLE 	完全服从ACID隔离原则，确保不发生脏读、不可重复读、和幻读，但执行效率最低。
 
 反射
-动态代理
+#动态代理
+继承InvocationHandler，实现invoke方法。
+将需要做代理的对象和参数传进invoke方法。最后返回对象的实例。
+InvocationHandler.getProxy()可以得到代理对象。
 
 hibernate缓存机制
     缓存是为了减少对数据库的访问
