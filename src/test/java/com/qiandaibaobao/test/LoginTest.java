@@ -2,10 +2,7 @@ package com.qiandaibaobao.test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -22,6 +19,7 @@ public class LoginTest{
 //        TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
 //        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
         System.out.println("date2 = " + date2);
+		LinkedHashMap map2 = null;
 
     }
 

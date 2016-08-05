@@ -7,5 +7,6 @@ public class TestBO {
 
     public void fuck() {
         System.out.println("bo!");
+
     }
 }

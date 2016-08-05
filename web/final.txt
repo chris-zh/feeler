@@ -50,6 +50,10 @@
 - LinkedHashMap
   1. 基于链表的HashMap的实现。桶的每一个节点都是链表的节点，该节点保存了当前上一个节点和下一个节点的引用。
      因此是有序的。
+  2. accessOrder默认为未插入顺序，false。可设置为访问顺序，true。
+  3. 重写removeEldestEntry方法，可以实现LRU算法。removeEldestEntry返回boolean值，
+  该方法可以提供在每次添加新条目时移除最旧条目的实现程序
+
 
 
 **************************多线程**************************
@@ -105,11 +109,45 @@ Java的线程是通过共享变量来同步数据的。Java内存模型规定，
 首先从主内存读取共享变量（read）， 然后将读取的值放入工作内存的一个临时变量中（load），再将此变量传送给执行引擎(use),
 执行引擎将变量传输给工作内存（assign），然后将此变量放入工作内存的一个临时变量中(store)，再将此变量传输给主内存(write)
 
-happens-before原则：待补充//todo
-
+happens-before原则：
+程序顺序规则：一个线程中的每个操作，happens- before 于该线程中的任意后续操作。
+监视器锁规则：对一个监视器锁的解锁，happens- before 于随后对这个监视器锁的加锁。
+volatile变量规则：对一个volatile域的写，happens- before 于任意后续对这个volatile域的读。
+传递性：如果A happens- before B，且B happens- before C，那么A happens- before C。
 
 GC算法//todo
+1、引用计数（reference counting）
+    原理：此对象有一个引用，则+1；删除一个引用，则-1。只用收集计数为0的对象。
+    缺点：无法处理循环引用的问题。如：对象A和B分别有字段b、a，令A.b=B和B.a=A，除此之外这2个对象再无任何引用，那实际上这2个对象已经不可能再被访问，但是引用计数算法却无法回收他们。
 
+2、复制（copying）
+    原理：把内存空间划分为2个相等的区域，每次只使用一个区域。垃圾回收时，遍历当前使用区域，把正在使用的对象复制到另外一个区域。
+    优点：不会出现碎片问题。
+    缺点：1、暂停整个应用。2、需要2倍的内存空间。
+
+3、标记-清扫（Mark-and-sweep）---sun前期版本就是用这个技术。
+    原理：对于“活”的对象，一定可以追溯到其存活在堆栈、静态存储区之中的引用。这个引用链条可能会穿过数个对象层次。第一阶段：从GC roots开始遍历所有的引用，对有活的对象进行标记。第二阶段：对堆进行遍历，把未标记的对象进行清除。这个解决了循环引用的问题。
+    缺点：1、暂停整个应用；2、会产生内存碎片。
+
+4、标记-压缩（Mark-Compact）自适应
+    原理：第一阶段标记活的对象，第二阶段把为标记的对象压缩到堆的其中一块，按顺序放。
+    优点：1、避免标记扫描的碎片问题；2、避免停止复制的空间问题。
+
+    具体使用什么方法GC，Java虚拟机会进行监视，如果所有对象都很稳定，垃圾回收器的效率低的话，就切换到“标记-扫描”方式；同样，Java虚拟机会跟踪“标记-扫描”的效果，要是堆空间碎片出现很多碎片，就会切换回“停止-复制”模式。这就是自适应的技术。
+
+5、分代（generational collecting）-----J2SE1.2以后使用此算法
+    原理：基于对象生命周期分析得出的垃圾回收算法。把对象分为年轻代、年老代、持久代，对不同的生命周期使用不同的算法（2-3方法中的一个即4自适应）进行回收。
+
+    MajorGC 的速度一般会比 Minor GC 慢 10倍以上。
+
+    年轻代（young）
+        分为3个区。一个Eden区，2个survivor区。大部分对象在Eden中生成。当Eden区满时，还存活的对象将被复制到survivor区。当该survivor区满时，此区的存活对象被复制到另外一个survivor区，当第2个survivor区也满时，该区还存活的对象将被复制到年老区（tenured）。
+
+    年老代（tenured）
+       存放从年轻代（young）复制过来的对象。
+
+    持久代（perm）
+        用于存放静态文件，如Java类、方法等。持久代对垃圾回收没有显著的影响，但是有些应用可能动态生成或者调用一些class
 
 #java.util.concurrent并发包的实现原理
 ConcurrentHashMap 线程安全 实现原理(送分题)
@@ -257,7 +295,7 @@ Spring MVC的配置
     数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，
     这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。
 
-#Spring IoC的实现原理 //todo
+#Spring IoC的实现原理
     先是验证xml：获取验证模式：DTD和XSD，获取Document， 验证
     解析BeanDefinition，一个接口，它是xml的bean标签在容器内的表现形式，包括bean标签的所有属性
     解析属性，解析子标签（包括构造函数，property），全部放到BeanDefinition里。到目前为止解析xml完成，得到了BeanDefinition形式的bean。
@@ -277,7 +315,7 @@ Spring MVC的配置
 
 
 
-#Spring AOP的实现原理 //todo
+#Spring AOP的实现原理
 横向的通过配置的方式编织业务代码。
 spring的aop标签配置，或者@AspectJ注解。
 AOP可以用java动态代理和cglib(动态操作class)两种方法实现。
