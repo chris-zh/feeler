@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/resources/js/Chart.js"></script>
+    <script src="/resources/js/jquery.js"></script>
+    <link href="/resources/css/style.css" rel="stylesheet">
+    <script>
+        $(document).ready(function () {
+            var data = {
+                "labels": ["工作年限",1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10,11,16,19,21],
+                "datasets": [{
+                    label: "太平项目 人数/工作年限",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [0,4, 13, 11, 6, 9 , 6, 5 , 4, 3, 2, 2, 2, 1, 1]
+                }]
+            };
+            var ctx = document.getElementById("myChart");
+            var myNewChart = new Chart(ctx, {
+                type: "bar",
+                data: data,
+            });
+            $(ctx).addClass("class-canvas-block");
+        });
+    </script>
+</head>
+<body>
+<div>
+    <canvas id="myChart" class="class-canvas-block"></canvas>
+</div>
+</body>
+</html>

@@ -157,18 +157,18 @@
     <!--</bean>-->
     <!--http://haohaoxuexi.iteye.com/blog/1893038-->
     <!-- 定义事务管理器（声明式的事务） -->
-    <bean id="transactionBase"
-          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
-          lazy-init="true" abstract="true">
-        <!-- 配置事务管理器 -->
-        <property name="transactionManager" ref="transactionManager" />
-        <!-- 配置事务属性 -->
-        <property name="transactionAttributes">
-            <props>
-                <prop key="*">PROPAGATION_REQUIRED</prop>
-            </props>
-        </property>
-    </bean>
+    <!--<bean id="transactionBase"-->
+          <!--class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"-->
+          <!--lazy-init="true" abstract="true">-->
+        <!--&lt;!&ndash; 配置事务管理器 &ndash;&gt;-->
+        <!--<property name="transactionManager" ref="transactionManager" />-->
+        <!--&lt;!&ndash; 配置事务属性 &ndash;&gt;-->
+        <!--<property name="transactionAttributes">-->
+            <!--<props>-->
+                <!--<prop key="*">PROPAGATION_REQUIRED</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 
 

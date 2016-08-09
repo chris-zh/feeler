@@ -125,4 +125,9 @@ public class LoginController {
         session.setAttribute("user", null);
         return "/templates/login.html";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/ebao")
+    public String test() {
+        return "/templates/test.html";
+    }
 }
